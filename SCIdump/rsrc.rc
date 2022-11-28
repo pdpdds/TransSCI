@@ -1,0 +1,57 @@
+
+#include <windows.h>
+#include "maindefs.h"
+
+
+#include "language.h"
+
+IDD_MSGSEL DIALOG 0, 0, 300, 154
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION INTERFACE_VOLEXTRACT
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,243,7,50,14, WS_DISABLED
+    PUSHBUTTON      INTERFACE_CANCELBTN,IDCANCEL,243,24,50,14
+    LISTBOX         IDC_VOLLIST,7,7,217,140,LBS_NOINTEGRALHEIGHT | LBS_NOTIFY | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+
+
+
+1 VERSIONINFO
+ FILEVERSION WIN_FILEVERSIONID
+ PRODUCTVERSION 2,0,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0xbL
+#else
+ FILEFLAGS 0xaL
+#endif
+ FILEOS 0x10001L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "Comments", "\0"
+           // VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", WIN_FILEDESCRIPTION
+            VALUE "FileVersion", WIN_FILEVERSION
+            VALUE "InternalName", "SCIdumper\0"
+            VALUE "LegalCopyright", WIN_LEGALCOPYRIGHT
+            VALUE "LegalTrademarks", WIN_LEGALTRADEMARKS
+            VALUE "OriginalFilename", "SCIdumper\0"
+            VALUE "ProductName", "TraduSCI\0"
+            VALUE "ProductVersion", WIN_PRODUCTVERSION
+        END
+    END
+   /* BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END */
+END
+

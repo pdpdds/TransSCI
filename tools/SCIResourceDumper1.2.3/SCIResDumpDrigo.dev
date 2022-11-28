@@ -1,0 +1,27 @@
+[Project]
+FileName=C:\Documents and Settings\Enrico\Desktop\lavori sie\utilities varie\sciresdump(drigo2)\SCIResDumpDrigo.dev
+Name=SCIResDumpDrigo
+Use_gpp=1
+UnitCount=4
+ResFiles=
+NoConsole=0
+IsDll=0
+Icon=C:\Programmi\Dev-C++\Icon\Mainicon.ico
+CompilerOptions=
+IncludeDirs=
+ObjFile=
+
+[Unit1]
+FileName=C:\Documents and Settings\Enrico\Desktop\lavori sie\utilities varie\sciresdump(drigo2)\lzs.cpp
+
+[Unit2]
+FileName=C:\Documents and Settings\Enrico\Desktop\lavori sie\utilities varie\sciresdump(drigo2)\pkdcl.cpp
+FileTime=777286485
+
+[Unit3]
+FileName=C:\Documents and Settings\Enrico\Desktop\lavori sie\utilities varie\sciresdump(drigo2)\SCIRESDump.cpp
+FileTime=841322651
+
+[Unit4]
+FileName=C:\Documents and Settings\Enrico\Desktop\lavori sie\utilities varie\sciresdump(drigo2)\StdAfx.cpp
+

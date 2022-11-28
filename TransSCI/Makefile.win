@@ -1,0 +1,55 @@
+# Project: SCIaMano(eng)
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = main.o utils.o message.o maps.o graphs.o msgfile.o msg2txt.o wordlookup.o SCRParse.o labels.o
+LINKOBJ  = main.o utils.o message.o maps.o graphs.o msgfile.o msg2txt.o wordlookup.o SCRParse.o labels.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -mwindows -lwinmm -lcomctl32 -m32 -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"./"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"./"
+BIN      = SCIaMano(ENG).exe
+CXXFLAGS = $(CXXINCS) -m32 -g3 -fpermissive
+CFLAGS   = $(INCS) -m32 -g3 -DENGLISH
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+utils.o: utils.cpp
+	$(CPP) -c utils.cpp -o utils.o $(CXXFLAGS)
+
+message.o: message.cpp
+	$(CPP) -c message.cpp -o message.o $(CXXFLAGS)
+
+maps.o: maps.cpp
+	$(CPP) -c maps.cpp -o maps.o $(CXXFLAGS)
+
+graphs.o: graphs.cpp
+	$(CPP) -c graphs.cpp -o graphs.o $(CXXFLAGS)
+
+msgfile.o: msgfile.cpp
+	$(CPP) -c msgfile.cpp -o msgfile.o $(CXXFLAGS)
+
+msg2txt.o: msg2txt.cpp
+	$(CPP) -c msg2txt.cpp -o msg2txt.o $(CXXFLAGS)
+
+wordlookup.o: wordlookup.cpp
+	$(CPP) -c wordlookup.cpp -o wordlookup.o $(CXXFLAGS)
+
+SCRParse.o: SCRParse.cpp
+	$(CPP) -c SCRParse.cpp -o SCRParse.o $(CXXFLAGS)
+
+labels.o: labels.cpp
+	$(CPP) -c labels.cpp -o labels.o $(CXXFLAGS)
