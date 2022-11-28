@@ -7,6 +7,7 @@
  
 #include "common.h"
 
+
 unsigned long searchWordInWL(char *lookupfile, char *originalStr) //, char *translatedStr)
 {
   FILE *cfilebuf = fopen(lookupfile, "r");

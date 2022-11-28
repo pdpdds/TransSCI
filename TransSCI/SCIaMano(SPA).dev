@@ -1,5 +1,5 @@
 [Project]
-FileName=SCIaMano(ENG).dev
+FileName=SCIaMano(SPA).dev
 Name=SCIaMano
 UnitCount=25
 PchHead=-1
@@ -25,14 +25,14 @@ Major=1
 Minor=4
 Release=0
 Build=0
-LanguageID=2057
+LanguageID=3082
 CharsetID=1252
 CompanyName=Enrico Rolfi
 FileVersion=1.4.0
-FileDescription=A program to translate SCI1.1/SCI32 games.
+FileDescription=Programa para traducir juegos SCI1.1/SCI32.
 InternalName=SCIaMano
-LegalCopyright=Enrico Rolfi (Endroz), 2003-2021
-LegalTrademarks=SCI (Sierra Creative Interpreter) is a trademark of Sierra On-line that holds copyrights on it.
+LegalCopyright=Enrico Rolfi (Endroz), 2003-2021.
+LegalTrademarks=SCI (Sierra Creative Interpreter) es una marca registrada de Sierra On-Line que mantiene los derechos.
 OriginalFilename=SCIaMano.exe
 ProductName=TraduSCI
 ProductVersion=2.4.0
@@ -48,15 +48,15 @@ Includes=.
 Libs=
 ResourceIncludes=
 MakeIncludes=
-Compiler=-DENGLISH_@@_
-CppCompiler=-DENGLISH_@@_-g_@@_
+Compiler=-DSPANISH_@@_
+CppCompiler=-DSPANISH_@@_-g_@@_
 Linker=-mwindows_@@_-lwinmm_@@_-lcomctl32_@@_libcurl.dll.a_@@_
 PreprocDefines=
 CompilerSettings=0000000000000001000000
 Icon=
-ExeOutput=Output (ENG)
+ExeOutput=Output (SPA)
 ImagesOutput=Images\
-ObjectOutput=Output (ENG)
+ObjectOutput=Output (SPA)
 OverrideOutput=1
 OverrideOutputName=SCIaMano.exe
 HostApplication=
@@ -316,16 +316,6 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
-FileName=eng.rc
-CompileCpp=1
-Folder=SCIaMano
-Compile=1
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit27]
 FileName=spa.rc
 Folder=SCIaMano
@@ -369,6 +359,15 @@ CompileCpp=1
 Folder=Headers
 Compile=1
 Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=spa.rc
+Folder=SCIaMano
+Compile=1
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=

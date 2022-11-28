@@ -1,5 +1,5 @@
 /*	TraduSCI - Sierra SCI1.1/SCI32 games translator
- *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2008.
+ *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2021.
  *
  *	Used to define string costants and messages in different languages
  *	
@@ -13,8 +13,8 @@
 
 //#define ITALIAN
 //#define ENGLISH
+//#define SPANISH
 
-//TODO add new english strings and fix old ones
 
 #ifdef ITALIAN
 #include "italian.h"

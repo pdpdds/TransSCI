@@ -1,5 +1,5 @@
 /*	TraduSCI - Sierra SCI1.1/SCI32 games translator
- *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2008.
+ *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2021.
  *
  *	This is the header file for main.cpp
  *	
@@ -25,15 +25,16 @@
 ///////////////////////////////////////////
  /* Stuff missing from the Windows headers */
  
-//#define LVS_EX_LABELTIP 0x00004000
-//#define LVS_EX_ONECLICKACTIVATE 0x00000040
-//#define LVS_EX_FULLROWSELECT 0x00000020
+#define LVS_EX_LABELTIP 0x00004000
+#define LVS_EX_ONECLICKACTIVATE 0x00000040
+#define LVS_EX_FULLROWSELECT 0x00000020
 //#define LVN_ITEMACTIVATE (LVN_FIRST-14)
 //#define LVM_SETEXTENDEDLISTVIEWSTYLE 0x00001036
 //#define LVS_EX_BORDERSELECT 0x00008000
 //#define LVS_EX_GRIDLINES 0x1
 
-/*typedef struct tagNMCUSTOMDRAWINFO {
+/*
+typedef struct tagNMCUSTOMDRAWINFO {
     NMHDR hdr;
     DWORD dwDrawStage;
     HDC hdc;
@@ -62,14 +63,14 @@ typedef struct tagNMLVCUSTOMDRAW {
     RECT rcText;
     UINT uAlign;
 #endif
-} NMLVCUSTOMDRAW, *LPNMLVCUSTOMDRAW;*/
+} NMLVCUSTOMDRAW, *LPNMLVCUSTOMDRAW;
+*/
 
 //#define CDRF_NOTIFYITEMDRAW 0x20
 //#define CDIS_FOCUS 16 
 //#define CDIS_SELECTED 1
 
 //////////////////////////////////////////
-
 
 
 
@@ -121,7 +122,7 @@ typedef struct tagNMLVCUSTOMDRAW {
  
  extern int LoadNounsFromHEAP(HWND hwnd);
  
- extern bool ImportLabels(HWND hwnd, const char *importfile);
- extern void ExportLabels(HWND hwnd, char type, const char *exportfile); 
+ extern bool ImportLabels(HWND hwnd, char *importfile);
+ extern void ExportLabels(HWND hwnd, char type, char *exportfile); 
  
 #endif //MAIN_H

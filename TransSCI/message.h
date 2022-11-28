@@ -9,9 +9,9 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+#include <cstring>
 #include "list.h"
 #include "maps.hpp"
-#include <windows.h>
                                                                                             
                                                                                                 
 /* 0xF identifies a Message file. Older games have this value ORed with 0x80  */                
@@ -101,10 +101,10 @@ public:
     ~StringItem();
 
     const char *getString() const { return _phrase; }
-    bool setString(const char *what);
+    bool setString(char *what);
 
     const char *getTranString() const { return _frase; }
-    bool setTranString(const char *what);
+    bool setTranString(char *what);
 
     const unsigned char getUnkByte(unsigned char which) const;
     void setUnkByte(unsigned char ub, unsigned char which);
@@ -131,7 +131,7 @@ public:
     ~CommentItem();
  
     const char *getString() const { return _comment; }
-    bool setString(const char *what);
+    bool setString(char *what);
 
     const unsigned char getUnkByte(unsigned char which) const;
     void setUnkByte(unsigned char ub, unsigned char which);
@@ -218,11 +218,11 @@ class MsgData {
     unsigned short currentString() { return _stringIndex; }
     void currentString(unsigned short doesit) { _stringIndex = doesit; }
     bool hasComments() { return _hasComments; }
-    void  hasComments(bool doesit) { _hasComments = doesit; }
+    void hasComments(bool doesit) { _hasComments = doesit; }
     unsigned char tradusciFormat() { return _tradusciFormat; }
-    void  tradusciFormat(unsigned char version) { _tradusciFormat = version; }
+    void tradusciFormat(unsigned char version) { _tradusciFormat = version; }
     unsigned char fontSize() { return _fontSize; }
-    void  fontSize(unsigned char points) { _fontSize = points; }
+    void fontSize(unsigned char points) { _fontSize = points; }
 
     const char *getPhrase(unsigned short which) const;
     const char *getTranslation(unsigned short which) const;
@@ -231,9 +231,9 @@ class MsgData {
     long getFileIndex(unsigned short idx) const;
     const SortedMsg *getLabelFromIndex(unsigned short idx) const;
     
-    bool setPhrase(unsigned short which, const char *what);
-    bool setTranslation(unsigned short which, const char *what);
-    bool setComment(unsigned short which, const char *what);
+    bool setPhrase(unsigned short which, char *what);
+    bool setTranslation(unsigned short which, char *what);
+    bool setComment(unsigned short which, char *what);
     
     const unsigned char getUnkByte(unsigned short phrase, unsigned char which) const;
     void setUnkByte(unsigned short phrase, unsigned char ub, unsigned char which);
@@ -259,10 +259,10 @@ class MsgData {
     const unsigned char getCloneCase(unsigned short phrase) const { return getUnkByte(phrase, 7); };
     void setCloneCase(unsigned short phrase, unsigned char ub) {setUnkByte(phrase, ub, 7); };
     
-    bool setNounName(unsigned char which, const char *what);
-    bool setVerbName(unsigned char which, const char *what);
-    bool setCaseName(unsigned char which, const char *what);
-    bool setTalkerName(unsigned char which, const char *what);
+    bool setNounName(unsigned char which, char *what);
+    bool setVerbName(unsigned char which, char *what);
+    bool setCaseName(unsigned char which, char *what);
+    bool setTalkerName(unsigned char which, char *what);
     
     char *getNounName(unsigned char which) const;
     char *getVerbName(unsigned char which) const;
@@ -282,7 +282,7 @@ class MsgData {
     void setAudMap(ProgramAudMap *map) { _audMap = map; }
     
     const char *getAudMapName() const { return _audMapName; }
-    void setAudMapName(const char *map) { memcpy(_audMapName, map, 256); }
+    void setAudMapName(char *map) { memcpy(_audMapName, map, 256); }
     
     SortedMsg DuplicateSeq(SortedMsg orig);
     

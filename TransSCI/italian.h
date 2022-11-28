@@ -57,7 +57,7 @@
 #define EXPORT_INFO "\n\n-- ATTENZIONE: La prima parte del file elenca le frasi tradotte per effettuare il controllo Ortografico. Se si aggiungono ritorni a capo in quella sezione, questi verranno inseriti nelle frasi. Inoltre, non modificare i numeri che identificano le frasi.\nI dati da questo punto in poi non sono sensibili e possono essere cancellati se non necessari. --\n\n\n"
 #define EXPORT_ITEM "Frase %u:\n%s\n\n"
 #define EXPORT_ENDSECTION "\n\n---- Fine della sezione ----\n"
-#define EXPORT_COPYRIGHT "Questo file è stato generato da SCIaMano 1.3.1 di Enrico Rolfi.\n\n\n"
+#define EXPORT_COPYRIGHT "Questo file è stato generato da SCIaMano 1.4.0 di Enrico Rolfi.\n\n\n"  
 #define EXPORT_FILEPATH "Percorso:  %s\n"
 #define EXPORT_FORMAT "Formato:  %s\n"
 #define EXPORT_VERSION "Versione:  %s\n"
@@ -102,6 +102,8 @@
 #define ERR_CANTLOADHEAPFILE "Errore nel caricamento del file Heap!"
 
 #define ERR_CANTLOADDLL "Impossibile caricare la libreria SCIdump.DLL! Il programma si bloccherà qualora si tentasse di caricare un Volume."
+
+#define ERR_CANTGGTRANSLATE "Non posso tradurre una frase che sia il clone di un'altra. Traduci la frase originale o elimina la clonazione prima."
 
 #define WARN_ATTENTION "Attenzione!"
 #define WARN_SIERRAFORMAT "Il file è in formato Sierra, e può memorizzare solo le frasi tradotte, al posto di quelle originali. Inoltre non supporta i dati speciali di TraduSCI (come i MAP e le etichette).\nSi desidera convertirlo in formato TraduSCI e conservare entrambe le versioni delle frasi (ed i dati speciali)?"
@@ -195,19 +197,27 @@
 
 #define MENU_NEXTCOMMENT "Vai alla prossima Nota\tCtrl+D"
 
+#define MENU_TRANSLATION "Traduzione"
+#define MENU_AUTOTRANSLATE "Avvia traduzione automatica"
+#define MENU_STOPTRANSLATE "Ferma traduzione automatica"
+#define MENU_SINGLETRANSLATE "Traduci frase corrente"
+#define MENU_SOURCELANGUAGE "Lingua originale"
+#define MENU_TRANSLANGUAGE "Lingua traduzione"
+
 #define MENU_HELP "Manuale di TraduSCI..."
 
-#define WIN_FILEDESCRIPTION "Programma per tradurre giochi SCI1.1/SCI32.\0"
-#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2014.\0"
-#define WIN_LEGALTRADEMARKS "SCI (Sierra Creative Interpreter) è un marchio registrato di Sierra On-Line che ne detiene i diritti.\0"
-#define WIN_FILEVERSION "1.3.1\0"
-#define WIN_PRODUCTVERSION "2.1\0"
-#define WIN_FILEVERSIONID 1,3,1,0
-#define INTERFACE_ABOUTBOX "Questo programma è open source (licenza GNU GPL), può essere distribuito e modificato liberamente purché resti open source. L'autore declina da ogni responsabilità circa eventuali danni causati dal suo utilizzo.  SCI è un marchio registrato di Sierra On-Line."
-#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2014\n\nAggiornamenti su http://erolfi.wordpress.com\nPer problemi, suggerimenti o altro scrivimi a: \n erolfi@gmail.com\n\n"
-#define INTERFACE_VERSION "Versione 1.3.1"
 
-#define MANUAL_PATH "Manuale/istruzioni.html"
+#define WIN_FILEDESCRIPTION "Programma per tradurre giochi SCI1.1/SCI32.\0"
+#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2021.\0"
+#define WIN_LEGALTRADEMARKS "SCI (Sierra Creative Interpreter) è un marchio registrato di Sierra On-Line che ne detiene i diritti.\0"
+#define WIN_FILEVERSION "1.4.0\0"
+#define WIN_PRODUCTVERSION "2.4\0"    
+#define WIN_FILEVERSIONID 1,4,0,0
+#define INTERFACE_ABOUTBOX "Questo programma è open source (licenza GNU GPL), può essere distribuito e modificato liberamente purché resti open source. L'autore declina da ogni responsabilità circa eventuali danni causati dal suo utilizzo.  SCI è un marchio registrato di Sierra On-Line."
+#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2021\n\nIn memoria di Michele Del Bene (Micartu)\n\nAggiornamenti su http://erolfi.wordpress.com\n\nPer problemi, suggerimenti o altro scrivimi a:\nerolfi su gmail.com\n\n"
+#define INTERFACE_VERSION "Versione 1.4.0"
+
+#define MANUAL_PATH "Manuale\\istruzioni.html"
 
 
 #define GRAPH_CLONEOF "\\fn\nClone di Soggetto %d, Verbo %d, Caso %d"
@@ -279,3 +289,5 @@
 #define IMPORT_WOULDYOULIKELABELSEARCH "Importare le frasi identificando mediante le etichette piuttosto che per indice?"
 
 #define WARNING_FUTUREBOXDATA "Questo file è stato salvato con una versione più recente di TraduSCI, e contiene dei dati aggiuntivi che verranno lasciati inalterati. Si raccomanda di non modificare questo file usando una versione di SCIaMano precedente alla 1.2, od i suddetti dati andranno persi."
+
+#define WARNING_GGTRANSEXISTS "Questa frase ha già una traduzione, sei proprio sicuro di volerla sovrascrivere?"

@@ -7,6 +7,8 @@
  
 #include "common.h"
 
+
+
 //to save window size, position
  extern RECT windowRect, tempwindowRect;
 
@@ -223,16 +225,16 @@ bool LoadFile(HWND hwnd, LPSTR pszFileName, MsgData **msgObj)
             } 
       if ((versionID & 0xFFFFFF00) != SCI_01)
             {
-               (*msgObj)->setNounName(0, INTERFACE_GENERICLABEL);
-               (*msgObj)->setVerbName(0, INTERFACE_GENERICFLABEL);
-               (*msgObj)->setCaseName(0, INTERFACE_GENERICLABEL);
+               (*msgObj)->setNounName(0, (char*)INTERFACE_GENERICLABEL);
+               (*msgObj)->setVerbName(0, (char*)INTERFACE_GENERICFLABEL);
+               (*msgObj)->setCaseName(0, (char*)INTERFACE_GENERICLABEL);
             }
             
       if ((*msgObj)->tradusciFormat()==TRADUSCI2) {             
             ////////since version 1.1.5  - ARRAYS of label names
             
             
-            (*msgObj)->setTalkerName(0, INTERFACE_GENERICLABEL);   //only talker for SCI_01
+            (*msgObj)->setTalkerName(0, (char*)INTERFACE_GENERICLABEL);   //only talker for SCI_01
             if ((*msgObj)->tradusciFormat()==TRADUSCI2)
             {
                fseek(cfilebuf, tradusci2DataPos, SEEK_SET);

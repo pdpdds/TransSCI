@@ -12,6 +12,7 @@
 
 #include "common.h"
 
+
 //extern BOOL ExtractFromVolume(HWND hwnd, char *mapname, unsigned char type, char *exten, char *filename);
 
 typedef unsigned char	uchar;
@@ -226,7 +227,7 @@ int LoadNounsFromHEAP(HWND hwnd)
      if (ofn.nFilterIndex==2)
      {
         //extract from resource
-         if (!ExtractFromVolume(hwnd, szMapFileName, 0x91, (char*)"hep", pszFileName))
+         if (!ExtractFromVolume(hwnd, szMapFileName, 0x91, (LPSTR)"hep", pszFileName))
             return false;
          
      } else {     

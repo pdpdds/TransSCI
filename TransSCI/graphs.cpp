@@ -8,6 +8,7 @@
  
 #include "common.h"
 
+
 void printGraphString(FILE *gfile, const char *source)
 {
      bool carriage = false;
@@ -166,6 +167,7 @@ void DrawNounGraph(HWND hwnd, int sorting, bool colors)
     
       SortedMsg smsg, oldsmsg, clonesmsg;
      const char *strapp = 0;
+     //char strnew[50];
      unsigned short actualnoun, actualverb, actualcase, baseid = 0;
      char basename[10];
      strcpy(basename, ((sorting == ByTalker) ? "Talker" : "Base"));   

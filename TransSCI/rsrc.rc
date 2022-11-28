@@ -2,7 +2,6 @@
 #include <windows.h>
 #include "maindefs.h"
 #include "language.h"
-#include "english.h"
 
 
 IDD_CLONEDIALOG DIALOG 0, 0, 255, 120
@@ -46,23 +45,23 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0,0,380,190
 CAPTION INTERFACE_VERSION
-FONT 8,"MS Sans Serif"
+FONT 10,"MS Sans Serif"
 STYLE WS_VISIBLE|WS_SYSMENU | WS_POPUP | WS_CAPTION|DS_3DLOOK|DS_CENTER|DS_MODALFRAME
 BEGIN
   CONTROL "",1002,"Static",WS_CHILD|WS_VISIBLE|SS_WHITERECT,-1,-1,382,283
   CONTROL "#1001",1005,"Static",WS_CHILD|WS_VISIBLE|SS_REALSIZEIMAGE|SS_CENTERIMAGE|SS_BITMAP,10,5,145,56//110,5,145,56
   CONTROL INTERFACE_ABOUTBOX,1003,"Static",SS_CENTER|WS_CHILD|WS_VISIBLE,28,158,320,126  //,WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME
-  CONTROL INTERFACE_SELECTOP,1007,"Static",SS_CENTER|WS_CHILD|WS_VISIBLE,5,84,370,50,WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME//114,225,134,13
+  CONTROL INTERFACE_SELECTOP,1007,"Static",SS_CENTER|WS_CHILD|WS_VISIBLE,5,85,370,65,WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME//114,225,134,13
 
-  CONTROL BUTTON_LOADMSG,IDC_LOADMSG,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,24,110,64,15
-  CONTROL BUTTON_LOADRES,IDC_LOADRES,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,114,110,64,15
-  CONTROL BUTTON_MANUAL,IDC_MANUAL,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,204,110,64,15
-  CONTROL BUTTON_CLOSE,IDC_CLOSEDLG,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,296,110,64,15
-  CONTROL INTERFACE_ABOUTTITLE,1004,"Static",SS_RIGHT|WS_CHILD|WS_VISIBLE,160,10,200,50//114,66,134,13
+  CONTROL BUTTON_LOADMSG,IDC_LOADMSG,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,24,115,64,15
+  CONTROL BUTTON_LOADRES,IDC_LOADRES,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,114,115,64,15
+  CONTROL BUTTON_MANUAL,IDC_MANUAL,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,204,115,64,15
+  CONTROL BUTTON_CLOSE,IDC_CLOSEDLG,"Button",WS_CHILD|WS_VISIBLE|WS_TABSTOP,296,115,64,15
+  CONTROL INTERFACE_ABOUTTITLE,1004,"Static",SS_RIGHT|WS_CHILD|WS_VISIBLE,160,10,200,70//114,66,134,13
 
 END
 
-1001 BITMAP DISCARDABLE "C:/Cprojects/TRADUSCI2.3_Source/Sources/SCIaMano/sciamano_sm256.bmp"
+1001 BITMAP DISCARDABLE "sciamano_sm256.bmp"
 
 
 themenu MENU
@@ -99,7 +98,7 @@ BEGIN
           
        POPUP MENU_NAVIGATION
 	  BEGIN
-                        MENUITEM MENU_FIRST, IDM_FIRST, GRAYED
+                         MENUITEM MENU_FIRST, IDM_FIRST, GRAYED
                          MENUITEM MENU_PREVIOUS, IDM_LEFT, GRAYED
                          MENUITEM MENU_NEXT, IDM_RIGHT, GRAYED
                          MENUITEM MENU_LAST, IDM_LAST, GRAYED
@@ -117,11 +116,11 @@ BEGIN
 	        BEGIN
 		       MENUITEM MENU_FONT14, IDM_FONT14, GRAYED
 		       MENUITEM MENU_FONT16, IDM_FONT16, GRAYED
-                       MENUITEM MENU_FONT18, IDM_FONT18, CHECKED, GRAYED
+               MENUITEM MENU_FONT18, IDM_FONT18, CHECKED, GRAYED
 		       MENUITEM MENU_FONT20, IDM_FONT20, GRAYED
 		       MENUITEM MENU_FONT22, IDM_FONT22, GRAYED
-                       MENUITEM MENU_FONT24, IDM_FONT24, GRAYED
-	               MENUITEM MENU_FONT26, IDM_FONT26, GRAYED
+               MENUITEM MENU_FONT24, IDM_FONT24, GRAYED
+	           MENUITEM MENU_FONT26, IDM_FONT26, GRAYED
 	        END
            END
   
@@ -152,22 +151,19 @@ BEGIN
        POPUP  MENU_GRAPH
          BEGIN
                                 
-		MENUITEM MENU_DRAWGF,  IDM_DRAWGF, GRAYED         
+		    MENUITEM MENU_DRAWGF,  IDM_DRAWGF, GRAYED         
 	        POPUP MENU_OTHERGRAPH
 	        BEGIN
                        MENUITEM MENU_DRAWINDEXGF, IDM_DRAWINDEXGF, GRAYED
-		       MENUITEM MENU_DRAWNOUNGF, IDM_DRAWNOUNGF, GRAYED
+		               MENUITEM MENU_DRAWNOUNGF, IDM_DRAWNOUNGF, GRAYED
                        MENUITEM MENU_DRAWVERBGF, IDM_DRAWVERBGF, GRAYED
                        MENUITEM MENU_DRAWCASEGF, IDM_DRAWCASEGF, GRAYED
                        MENUITEM MENU_DRAWTALKERGF, IDM_DRAWTALKERGF, GRAYED
 	        END
-                MENUITEM MENU_DRAWGFBW,  IDM_DRAWGFBW, GRAYED
+            MENUITEM MENU_DRAWGFBW,  IDM_DRAWGFBW, GRAYED
           END
 
-            
-                
-
-
+   
         POPUP MENU_AUDIO
         BEGIN
                 MENUITEM MENU_LOADMAP, IDM_LOADMAP, GRAYED
@@ -179,6 +175,246 @@ BEGIN
                 MENUITEM MENU_LOADAUDRES, IDM_LOADAUDRES, GRAYED
                 MENUITEM MENU_PLAY, IDM_PLAY, GRAYED
                 MENUITEM MENU_AUTOPLAY, IDM_AUTOPLAY, GRAYED       
+        END
+
+        POPUP MENU_TRANSLATION, GRAYED
+        BEGIN
+            MENUITEM MENU_AUTOTRANSLATE, IDM_AUTOTRANSLATE
+            MENUITEM MENU_SINGLETRANSLATE, IDM_SINGLETRANSLATE
+            MENUITEM SEPARATOR
+            POPUP MENU_SOURCELANGUAGE/*, GRAYED*/
+	        BEGIN
+	            MENUITEM "Afrikaans", IDM_GTLANGUAGE
+                MENUITEM "Albanian", IDM_GTLANGUAGE+1
+//                MENUITEM "Amharic", IDM_GTLANGUAGE+2
+//                MENUITEM "Arabic", IDM_GTLANGUAGE+3
+//                MENUITEM "Armenian", IDM_GTLANGUAGE+4
+                MENUITEM "Azerbaijani", IDM_GTLANGUAGE+5
+                MENUITEM "Basque", IDM_GTLANGUAGE+6
+//                MENUITEM "Belarusian", IDM_GTLANGUAGE+7
+//                MENUITEM "Bengali", IDM_GTLANGUAGE+8
+                MENUITEM "Bosnian", IDM_GTLANGUAGE+9
+                MENUITEM "Bulgarian", IDM_GTLANGUAGE+10
+                MENUITEM "Catalan", IDM_GTLANGUAGE+11
+                MENUITEM "Cebuano", IDM_GTLANGUAGE+12
+//                MENUITEM "Chinese (Simplified)", IDM_GTLANGUAGE+13
+//                MENUITEM "Chinese (Traditional)", IDM_GTLANGUAGE+14
+                MENUITEM "Corsican", IDM_GTLANGUAGE+15
+                MENUITEM "Croatian", IDM_GTLANGUAGE+16
+                MENUITEM "Czech", IDM_GTLANGUAGE+17
+                MENUITEM "Danish", IDM_GTLANGUAGE+18
+                MENUITEM "Dutch", IDM_GTLANGUAGE+19
+                MENUITEM "English", IDM_GTLANGUAGE+20, CHECKED
+                MENUITEM "Esperanto", IDM_GTLANGUAGE+21
+                MENUITEM "Estonian", IDM_GTLANGUAGE+22
+                MENUITEM "Finnish", IDM_GTLANGUAGE+23
+                MENUITEM "French", IDM_GTLANGUAGE+24
+                MENUITEM "Frisian", IDM_GTLANGUAGE+25
+                MENUITEM "Galician", IDM_GTLANGUAGE+26
+//                MENUITEM "Georgian", IDM_GTLANGUAGE+27
+                MENUITEM "German", IDM_GTLANGUAGE+28
+//                MENUITEM "Greek", IDM_GTLANGUAGE+29
+//                MENUITEM "Gujarati", IDM_GTLANGUAGE+30
+                MENUITEM "Haitian Creole", IDM_GTLANGUAGE+31
+                MENUITEM "Hausa", IDM_GTLANGUAGE+32
+                MENUITEM "Hawaiian", IDM_GTLANGUAGE+33
+//                MENUITEM "Hebrew", IDM_GTLANGUAGE+34
+//                MENUITEM "Hindi", IDM_GTLANGUAGE+35
+                MENUITEM "Hmong", IDM_GTLANGUAGE+36
+                MENUITEM "Hungarian", IDM_GTLANGUAGE+37
+                MENUITEM "Icelandic", IDM_GTLANGUAGE+38
+                MENUITEM "Igbo", IDM_GTLANGUAGE+39
+                MENUITEM "Indonesian", IDM_GTLANGUAGE+40
+                MENUITEM "Irish", IDM_GTLANGUAGE+41
+                MENUITEM "Italian", IDM_GTLANGUAGE+42
+//                MENUITEM "Japanese", IDM_GTLANGUAGE+43
+                MENUITEM "Javanese", IDM_GTLANGUAGE+44
+//                MENUITEM "Kannada", IDM_GTLANGUAGE+45
+//                MENUITEM "Kazakh", IDM_GTLANGUAGE+46
+//                MENUITEM "Khmer", IDM_GTLANGUAGE+47
+                MENUITEM "Kinyarwanda", IDM_GTLANGUAGE+48
+//                MENUITEM "Korean", IDM_GTLANGUAGE+49
+                MENUITEM "Kurdish", IDM_GTLANGUAGE+50
+//                MENUITEM "Kyrgyz", IDM_GTLANGUAGE+51
+//                MENUITEM "Lao", IDM_GTLANGUAGE+52
+                MENUITEM "Latvian", IDM_GTLANGUAGE+53
+                MENUITEM "Lithuanian", IDM_GTLANGUAGE+54
+                MENUITEM "Luxembourgish", IDM_GTLANGUAGE+55
+//                MENUITEM "Macedonian", IDM_GTLANGUAGE+56
+                MENUITEM "Malagasy", IDM_GTLANGUAGE+57
+                MENUITEM "Malay", IDM_GTLANGUAGE+58
+//                MENUITEM "Malayalam", IDM_GTLANGUAGE+59
+                MENUITEM "Maltese", IDM_GTLANGUAGE+60
+                MENUITEM "Maori", IDM_GTLANGUAGE+61
+//                MENUITEM "Marathi", IDM_GTLANGUAGE+62
+//                MENUITEM "Mongolian", IDM_GTLANGUAGE+63
+//                MENUITEM "Myanmar (Burmese)", IDM_GTLANGUAGE+64
+//                MENUITEM "Nepali", IDM_GTLANGUAGE+65
+                MENUITEM "Norwegian", IDM_GTLANGUAGE+66
+//                MENUITEM "Nyanja (Chichewa)", IDM_GTLANGUAGE+67
+//                MENUITEM "Odia (Oriya)", IDM_GTLANGUAGE+68
+//                MENUITEM "Pashto", IDM_GTLANGUAGE+69
+//                MENUITEM "Persian", IDM_GTLANGUAGE+70
+                MENUITEM "Polish", IDM_GTLANGUAGE+71
+                MENUITEM "Portuguese (Portugal, Brazil)", IDM_GTLANGUAGE+72
+//                MENUITEM "Punjabi", IDM_GTLANGUAGE+73
+                MENUITEM "Romanian", IDM_GTLANGUAGE+74
+//                MENUITEM "Russian", IDM_GTLANGUAGE+75
+                MENUITEM "Samoan", IDM_GTLANGUAGE+76
+                MENUITEM "Scots Gaelic", IDM_GTLANGUAGE+77
+//                MENUITEM "Serbian", IDM_GTLANGUAGE+78
+                MENUITEM "Sesotho", IDM_GTLANGUAGE+79
+                MENUITEM "Shona", IDM_GTLANGUAGE+80
+//                MENUITEM "Sindhi", IDM_GTLANGUAGE+81
+//                MENUITEM "Sinhala (Sinhalese)", IDM_GTLANGUAGE+82
+                MENUITEM "Slovak", IDM_GTLANGUAGE+83
+                MENUITEM "Slovenian", IDM_GTLANGUAGE+84
+                MENUITEM "Somali", IDM_GTLANGUAGE+85
+                MENUITEM "Spanish", IDM_GTLANGUAGE+86
+                MENUITEM "Sundanese", IDM_GTLANGUAGE+87
+                MENUITEM "Swahili", IDM_GTLANGUAGE+88
+                MENUITEM "Swedish", IDM_GTLANGUAGE+89
+                MENUITEM "Tagalog (Filipino)", IDM_GTLANGUAGE+90
+//                MENUITEM "Tajik", IDM_GTLANGUAGE+91
+//                MENUITEM "Tamil", IDM_GTLANGUAGE+92
+//                MENUITEM "Tatar", IDM_GTLANGUAGE+93
+//                MENUITEM "Telugu", IDM_GTLANGUAGE+94
+//                MENUITEM "Thai", IDM_GTLANGUAGE+95
+                MENUITEM "Turkish", IDM_GTLANGUAGE+96
+                MENUITEM "Turkmen", IDM_GTLANGUAGE+97
+//                MENUITEM "Ukrainian", IDM_GTLANGUAGE+98
+//                MENUITEM "Urdu", IDM_GTLANGUAGE+99
+//                MENUITEM "Uyghur", IDM_GTLANGUAGE+100
+                MENUITEM "Uzbek", IDM_GTLANGUAGE+101
+                MENUITEM "Vietnamese", IDM_GTLANGUAGE+102
+                MENUITEM "Welsh", IDM_GTLANGUAGE+103
+                MENUITEM "Xhosa", IDM_GTLANGUAGE+104
+//                MENUITEM "Yiddish", IDM_GTLANGUAGE+105
+                MENUITEM "Yoruba", IDM_GTLANGUAGE+106
+                MENUITEM "Zulu", IDM_GTLANGUAGE+107
+	        END
+	        
+	        POPUP MENU_TRANSLANGUAGE/*, GRAYED*/
+	        BEGIN
+	        	MENUITEM "Afrikaans", IDM_GTTRANSLANG
+                MENUITEM "Albanian", IDM_GTTRANSLANG+1
+//                MENUITEM "Amharic", IDM_GTTRANSLANG+2
+//                MENUITEM "Arabic", IDM_GTTRANSLANG+3
+//                MENUITEM "Armenian", IDM_GTTRANSLANG+4
+                MENUITEM "Azerbaijani", IDM_GTTRANSLANG+5
+                MENUITEM "Basque", IDM_GTTRANSLANG+6
+//                MENUITEM "Belarusian", IDM_GTTRANSLANG+7
+//                MENUITEM "Bengali", IDM_GTTRANSLANG+8
+                MENUITEM "Bosnian", IDM_GTTRANSLANG+9
+                MENUITEM "Bulgarian", IDM_GTTRANSLANG+10
+                MENUITEM "Catalan", IDM_GTTRANSLANG+11
+                MENUITEM "Cebuano", IDM_GTTRANSLANG+12
+//                MENUITEM "Chinese (Simplified)", IDM_GTTRANSLANG+13
+//                MENUITEM "Chinese (Traditional)", IDM_GTTRANSLANG+14
+                MENUITEM "Corsican", IDM_GTTRANSLANG+15
+                MENUITEM "Croatian", IDM_GTTRANSLANG+16
+                MENUITEM "Czech", IDM_GTTRANSLANG+17
+                MENUITEM "Danish", IDM_GTTRANSLANG+18
+                MENUITEM "Dutch", IDM_GTTRANSLANG+19
+                MENUITEM "English", IDM_GTTRANSLANG+20
+                MENUITEM "Esperanto", IDM_GTTRANSLANG+21
+                MENUITEM "Estonian", IDM_GTTRANSLANG+22
+                MENUITEM "Finnish", IDM_GTTRANSLANG+23
+                MENUITEM "French", IDM_GTTRANSLANG+24
+                MENUITEM "Frisian", IDM_GTTRANSLANG+25
+                MENUITEM "Galician", IDM_GTTRANSLANG+26
+//                MENUITEM "Georgian", IDM_GTTRANSLANG+27
+                MENUITEM "German", IDM_GTTRANSLANG+28
+//                MENUITEM "Greek", IDM_GTTRANSLANG+29
+//                MENUITEM "Gujarati", IDM_GTTRANSLANG+30
+                MENUITEM "Haitian Creole", IDM_GTTRANSLANG+31
+                MENUITEM "Hausa", IDM_GTTRANSLANG+32
+                MENUITEM "Hawaiian", IDM_GTTRANSLANG+33
+//                MENUITEM "Hebrew", IDM_GTTRANSLANG+34
+//                MENUITEM "Hindi", IDM_GTTRANSLANG+35
+                MENUITEM "Hmong", IDM_GTTRANSLANG+36
+                MENUITEM "Hungarian", IDM_GTTRANSLANG+37
+                MENUITEM "Icelandic", IDM_GTTRANSLANG+38
+                MENUITEM "Igbo", IDM_GTTRANSLANG+39
+                MENUITEM "Indonesian", IDM_GTTRANSLANG+40
+                MENUITEM "Irish", IDM_GTTRANSLANG+41
+#ifdef SPANISH
+                MENUITEM "Italian", IDM_GTTRANSLANG+42
+#else
+                MENUITEM "Italian", IDM_GTTRANSLANG+42, CHECKED
+#endif
+//                MENUITEM "Japanese", IDM_GTTRANSLANG+43
+                MENUITEM "Javanese", IDM_GTTRANSLANG+44
+//                MENUITEM "Kannada", IDM_GTTRANSLANG+45
+//                MENUITEM "Kazakh", IDM_GTTRANSLANG+46
+//                MENUITEM "Khmer", IDM_GTTRANSLANG+47
+                MENUITEM "Kinyarwanda", IDM_GTTRANSLANG+48
+//                MENUITEM "Korean", IDM_GTTRANSLANG+49
+                MENUITEM "Kurdish", IDM_GTTRANSLANG+50
+//                MENUITEM "Kyrgyz", IDM_GTTRANSLANG+51
+//                MENUITEM "Lao", IDM_GTTRANSLANG+52
+                MENUITEM "Latvian", IDM_GTTRANSLANG+53
+                MENUITEM "Lithuanian", IDM_GTTRANSLANG+54
+                MENUITEM "Luxembourgish", IDM_GTTRANSLANG+55
+//                MENUITEM "Macedonian", IDM_GTTRANSLANG+56
+                MENUITEM "Malagasy", IDM_GTTRANSLANG+57
+                MENUITEM "Malay", IDM_GTTRANSLANG+58
+//                MENUITEM "Malayalam", IDM_GTTRANSLANG+59
+                MENUITEM "Maltese", IDM_GTTRANSLANG+60
+                MENUITEM "Maori", IDM_GTTRANSLANG+61
+//                MENUITEM "Marathi", IDM_GTTRANSLANG+62
+//                MENUITEM "Mongolian", IDM_GTTRANSLANG+63
+//                MENUITEM "Myanmar (Burmese)", IDM_GTTRANSLANG+64
+//                MENUITEM "Nepali", IDM_GTTRANSLANG+65
+                MENUITEM "Norwegian", IDM_GTTRANSLANG+66
+//                MENUITEM "Nyanja (Chichewa)", IDM_GTTRANSLANG+67
+//                MENUITEM "Odia (Oriya)", IDM_GTTRANSLANG+68
+//                MENUITEM "Pashto", IDM_GTTRANSLANG+69
+//                MENUITEM "Persian", IDM_GTTRANSLANG+70
+                MENUITEM "Polish", IDM_GTTRANSLANG+71
+                MENUITEM "Portuguese (Portugal, Brazil)", IDM_GTTRANSLANG+72
+//                MENUITEM "Punjabi", IDM_GTTRANSLANG+73
+                MENUITEM "Romanian", IDM_GTTRANSLANG+74
+//                MENUITEM "Russian", IDM_GTTRANSLANG+75
+                MENUITEM "Samoan", IDM_GTTRANSLANG+76
+                MENUITEM "Scots Gaelic", IDM_GTTRANSLANG+77
+//                MENUITEM "Serbian", IDM_GTTRANSLANG+78
+                MENUITEM "Sesotho", IDM_GTTRANSLANG+79
+                MENUITEM "Shona", IDM_GTTRANSLANG+80
+//                MENUITEM "Sindhi", IDM_GTTRANSLANG+81
+//                MENUITEM "Sinhala (Sinhalese)", IDM_GTTRANSLANG+82
+                MENUITEM "Slovak", IDM_GTTRANSLANG+83
+                MENUITEM "Slovenian", IDM_GTTRANSLANG+84
+                MENUITEM "Somali", IDM_GTTRANSLANG+85
+#ifdef SPANISH
+                MENUITEM "Spanish", IDM_GTTRANSLANG+86, CHECKED
+#else
+                MENUITEM "Spanish", IDM_GTTRANSLANG+86
+#endif
+                MENUITEM "Sundanese", IDM_GTTRANSLANG+87
+                MENUITEM "Swahili", IDM_GTTRANSLANG+88
+                MENUITEM "Swedish", IDM_GTTRANSLANG+89
+                MENUITEM "Tagalog (Filipino)", IDM_GTTRANSLANG+90
+//                MENUITEM "Tajik", IDM_GTTRANSLANG+91
+//                MENUITEM "Tamil", IDM_GTTRANSLANG+92
+//                MENUITEM "Tatar", IDM_GTTRANSLANG+93
+//                MENUITEM "Telugu", IDM_GTTRANSLANG+94
+//                MENUITEM "Thai", IDM_GTTRANSLANG+95
+                MENUITEM "Turkish", IDM_GTTRANSLANG+96
+                MENUITEM "Turkmen", IDM_GTTRANSLANG+97
+//                MENUITEM "Ukrainian", IDM_GTTRANSLANG+98
+//                MENUITEM "Urdu", IDM_GTTRANSLANG+99
+//                MENUITEM "Uyghur", IDM_GTTRANSLANG+100
+                MENUITEM "Uzbek", IDM_GTTRANSLANG+101
+                MENUITEM "Vietnamese", IDM_GTTRANSLANG+102
+                MENUITEM "Welsh", IDM_GTTRANSLANG+103
+                MENUITEM "Xhosa", IDM_GTTRANSLANG+104
+//                MENUITEM "Yiddish", IDM_GTTRANSLANG+105
+                MENUITEM "Yoruba", IDM_GTTRANSLANG+106
+                MENUITEM "Zulu", IDM_GTTRANSLANG+107
+
+	        END
+	        
         END
 
 	POPUP "?"
@@ -210,7 +446,7 @@ END
 
 1 VERSIONINFO
  FILEVERSION WIN_FILEVERSIONID
- PRODUCTVERSION 2,0,0,0
+ PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0xbL
@@ -243,4 +479,4 @@ BEGIN
     END */
 END
 
-500 ICON MOVEABLE PURE LOADONCALL DISCARDABLE "Edit.ico"
+500 ICON MOVEABLE PURE LOADONCALL DISCARDABLE "C:/Program Files (x86)/Dev-Cpp/Icons/Edit.ico"

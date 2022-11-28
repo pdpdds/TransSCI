@@ -11,6 +11,8 @@
 #include "language.h"
 
 
+
+
 /* methods for StringItem class */
 
 StringItem::~StringItem()
@@ -22,7 +24,7 @@ StringItem::~StringItem()
 } 
 
 
-bool StringItem::setString(const char *what)
+bool StringItem::setString(char *what)
 { 
    if (_phrase)
       delete [] _phrase;
@@ -34,7 +36,7 @@ bool StringItem::setString(const char *what)
    return false;
 }
 
-bool StringItem::setTranString(const char *what)
+bool StringItem::setTranString(char *what)
 {
    if (_frase)
    {
@@ -75,7 +77,7 @@ CommentItem::~CommentItem()
 }
  
 
-bool CommentItem::setString(const char *what)
+bool CommentItem::setString(char *what)
 {
    if (_comment)
       delete [] _comment;
@@ -161,7 +163,7 @@ MsgData::~MsgData()
 
 /* Methods for class MsgData */
 
-bool MsgData::setNounName(unsigned char which, const char *what)
+bool MsgData::setNounName(unsigned char which, char *what)
 {
    if (_nouns[which])
       delete [] _nouns[which];
@@ -176,7 +178,7 @@ bool MsgData::setNounName(unsigned char which, const char *what)
    return false;
 }
 
-bool MsgData::setVerbName(unsigned char which, const char *what)
+bool MsgData::setVerbName(unsigned char which, char *what)
 {
    if (_verbs[which])
       delete [] _verbs[which];
@@ -191,7 +193,7 @@ bool MsgData::setVerbName(unsigned char which, const char *what)
    return false;
 }
 
-bool MsgData::setCaseName(unsigned char which, const char *what)
+bool MsgData::setCaseName(unsigned char which, char *what)
 {
    if (_cases[which])
       delete [] _cases[which];
@@ -206,7 +208,7 @@ bool MsgData::setCaseName(unsigned char which, const char *what)
    return false;
 }
 
-bool MsgData::setTalkerName(unsigned char which, const char *what)
+bool MsgData::setTalkerName(unsigned char which, char *what)
 {
    if (_talkers[which])
       delete [] _talkers[which];
@@ -279,7 +281,7 @@ const char *MsgData::getComment(unsigned short which) const
    return 0;   
 }    
     
-bool MsgData::setPhrase(unsigned short which, const char *what)
+bool MsgData::setPhrase(unsigned short which, char *what)
 {
    unsigned short wreal = which;   
    
@@ -296,7 +298,7 @@ bool MsgData::setPhrase(unsigned short which, const char *what)
    return false;   
 }
 
-bool MsgData::setTranslation(unsigned short which, const char *what)
+bool MsgData::setTranslation(unsigned short which, char *what)
 {
    unsigned short wreal = which;   
    
@@ -313,7 +315,7 @@ bool MsgData::setTranslation(unsigned short which, const char *what)
    return false;   
 }
 
-bool MsgData::setComment(unsigned short which, const char *what)
+bool MsgData::setComment(unsigned short which, char *what)
 {
    unsigned short wreal = which;   
 
@@ -397,6 +399,7 @@ void MsgData::setComUnkByte(unsigned short comment, unsigned char ub, unsigned c
 
 void MsgData::initSort()
 {
+     //SortedMsg smsg;
      for (unsigned short i=0; i<_phrasesCount; i++)
      {
          SortedMsg smsg;
@@ -559,7 +562,7 @@ SortedMsg MsgData::DuplicateSeq(SortedMsg orig)
     
     if (newseq.noun>0)
     { //NOTE unhandled errors follows where //** stands
-      setNounName(newseq.noun, CLONES_UNCLONEDSEQLABEL); 
+      setNounName(newseq.noun, (char*)CLONES_UNCLONEDSEQLABEL); 
     
       unsigned short orid = findListIndex(orig);
       do {

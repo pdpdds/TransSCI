@@ -22,7 +22,7 @@ private:
 public:
     //List(void) : _size(0), _item(0), _last(0) { }
                                //NOTE: size is discarded: our list class is now dynamically allocated
-	List(const unsigned short size) : /*_size(size), */_last(0), _item(new T*[0x0000FFFF]) { }
+	List(const unsigned short size) : /*_size(size), */_last(0), _item(new T* [0x0000FFFF]) { }
 
 	~List() { if (_item) delete [] _item; }
     

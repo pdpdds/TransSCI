@@ -1,5 +1,5 @@
 /*	TraduSCI - Sierra SCI1.1/SCI32 games translator
-*  Copyright (C) Enrico Rolfi 'Endroz', 2003-2008.                            
+*  Copyright (C) Enrico Rolfi 'Endroz', 2003-2021.                            
 *
 *	This is the main program file with all the Windoze stuff
 *	
@@ -9,6 +9,8 @@
 //     constants definitions might help for future interface upgrading
 
 #include "main.h"
+
+#include "ggtrans-api-client.h"
 
  HINSTANCE hInst;
  
@@ -101,12 +103,352 @@
  char szFirstFindFileName[MAX_PATH] = "";
  char szAppDir[MAX_PATH] = "";
 
- bool datasaved = true;
+ volatile bool datasaved = true;
  
  /* That's the object which stores all MSG data */
  MsgData *msgObj = 0;
 
+//added in 1.4
+ /* variables for G translation */
+ HANDLE hTransThread = NULL; 
+ DWORD dwTransThreadId;   //returns the thread identifier
+ static volatile bool ggTransThreadRunning = false;
+ static volatile bool ggTransThreadHalt = false;
+ CRITICAL_SECTION ggTransThreadCriticalSection; 
+ volatile int ggt_source_language = 20;          //english
+ #ifdef SPANISH
+ volatile int ggt_dest_language = 86;            //spanish
+ #else
+ volatile int ggt_dest_language = 42;            //italian
+ #endif
+ const char ggt_languages[][6] = {"af",
+                                  "sq",
+                                  "am",
+                                  "ar",
+                                  "hy",
+                                  "az",
+                                  "eu",
+                                  "be",
+                                  "bn",
+                                  "bs",
+                                  "bg",
+                                  "ca",
+                                  "ceb",
+                                  "zh",
+                                  "zh-TW", 
+                                  "co",
+                                  "hr",
+                                  "cs",
+                                  "da",
+                                  "nl",
+                                  "en",
+                                  "eo",
+                                  "et",
+                                  "fi",
+                                  "fr",
+                                  "fy",
+                                  "gl",
+                                  "ka",
+                                  "de",
+                                  "el",
+                                  "gu",
+                                  "ht",
+                                  "ha",
+                                  "haw",
+                                  "he",
+                                  "hi",    
+                                  "hmn",
+                                  "hu",
+                                  "is",
+                                  "ig",
+                                  "id",
+                                  "ga",
+                                  "it",
+                                  "ja",
+                                  "jv",
+                                  "kn",
+                                  "kk",
+                                  "km",
+                                  "rw",
+                                  "ko",
+                                  "ku",
+                                  "ky",
+                                  "lo",
+                                  "lv",
+                                  "lt",
+                                  "lb",
+                                  "mk",
+                                  "mg",
+                                  "ms",
+                                  "ml",
+                                  "mt",
+                                  "mi",
+                                  "mr",
+                                  "mn",
+                                  "my",
+                                  "ne",
+                                  "no",
+                                  "ny",
+                                  "or",
+                                  "ps",
+                                  "fa",
+                                  "pl",
+                                  "pt",
+                                  "pa",
+                                  "ro",
+                                  "ru",
+                                  "sm",
+                                  "gd",
+                                  "sr",
+                                  "st",
+                                  "sn",
+                                  "sd",
+                                  "si",
+                                  "sk",
+                                  "sl",
+                                  "so",
+                                  "es",
+                                  "su",
+                                  "sw",
+                                  "sv",
+                                  "tl",
+                                  "tg",
+                                  "ta",
+                                  "tt",
+                                  "te",
+                                  "th",
+                                  "tr",
+                                  "tk",
+                                  "uk",
+                                  "ur",
+                                  "ug",
+                                  "uz",
+                                  "vi",
+                                  "cy",
+                                  "xh",
+                                  "yo",
+                                  "zu"};
+// NOTE: most of those languages won't be supported by the GUI anyway (TODO... support for other character sets)
+ 
 
+//added in 1.4
+DWORD WINAPI AutoTransThread(LPVOID lpParam)
+{
+    ggTransThreadRunning = true;
+    ggtrans_init_client();
+    
+    //ModifyMenu(menu, IDM_AUTOTRANSLATE, MF_BYCOMMAND | MF_STRING, IDM_AUTOTRANSLATE, MENU_STOPTRANSLATE);
+    
+    for (long i = 0; (i<msgObj->getPhrasesCount()) /*&& !ggTransThreadHalt*/; ++i)
+    {
+        // Request ownership of the critical section.
+        EnterCriticalSection(&ggTransThreadCriticalSection); 
+        if (ggTransThreadHalt)
+        {
+            // Release ownership of the critical section.
+            LeaveCriticalSection(&ggTransThreadCriticalSection);
+            break;
+        }
+        // Release ownership of the critical section.
+        LeaveCriticalSection(&ggTransThreadCriticalSection);
+
+        //check if string is not translated AND if it's not a clone string...
+        if ((msgObj->getTranslation(i) != 0) || msgObj->isClone(i))
+        {
+            continue;
+        }
+            
+        char *trans_text = ggtrans_translate_multiline_text((char *)msgObj->getPhrase(i), ggt_languages[ggt_source_language], ggt_languages[ggt_dest_language]);  //"en", "it");
+        // MessageBox (hwndMain, trans_text, INTERFACE_PROPERTIESTITLE, /*MB_ICONINFORMATION*/ MB_USERICON | MB_OK); //
+                      
+         int nBufferSize = strlen(trans_text)*2 +10;
+         WCHAR *tBuffer = (WCHAR *) malloc(nBufferSize);
+           
+         MultiByteToWideChar(
+          CP_UTF8,
+          0,         
+          trans_text, 
+          -1,       
+          tBuffer,  
+          nBufferSize        
+        );  
+           
+         WideCharToMultiByte(
+          CP_ACP, 
+          0, 
+          tBuffer,
+          -1, 
+          trans_text, 
+          strlen(trans_text)+1,
+          "?UNK?",    
+          0
+        );
+        
+        free (tBuffer);
+         
+        
+        if (msgObj->currentString() == i)          
+        {   //if this is the selected item, let's first update the Edit field, unless the user is already doing that!
+            char textdata[10240];
+            GetWindowText(hwndEdit, textdata, 10240);
+            if (textdata[0] == 0)
+            {
+                msgObj->setTranslation(i, trans_text);
+                SetWindowText(hwndEdit, trans_text);
+                                  
+            }
+            else
+            {
+                free(trans_text);
+        
+                Sleep(2000);  //to avoid gòòg13 blocking us
+                
+                continue;    
+            }
+            
+        }
+        
+        //now let's replace the list item
+        LV_ITEM lvi;
+        lvi.pszText = trans_text;
+        lvi.cchTextMax = 10240;                   
+        lvi.mask = LVIF_TEXT;
+        lvi.iItem = i;
+        lvi.iSubItem = 7;
+        ListView_SetItem(hwndListV, &lvi);
+
+        msgObj->setTranslation(i, trans_text);
+               
+        datasaved = false;
+        EnableMenuItem(menu, IDM_FILESAVE, MF_ENABLED);
+
+        free(trans_text);
+        
+        Sleep(2000);  //to avoid gòòg13 blocking us
+        
+        if ((i+1)%10 == 0)
+        {
+            //sleep 65 seconds more to avoid gòòg13 blocking us (TODO should be configurable....)
+            for (int wr = 0; (wr<65) /*&& !ggTransThreadHalt*/; ++wr)
+            {
+                // Request ownership of the critical section.
+                EnterCriticalSection(&ggTransThreadCriticalSection); 
+                if (ggTransThreadHalt)
+                {
+                    // Release ownership of the critical section.
+                    LeaveCriticalSection(&ggTransThreadCriticalSection);
+                    break;
+                }
+                // Release ownership of the critical section.
+                LeaveCriticalSection(&ggTransThreadCriticalSection);
+                
+                Sleep(1000);
+            } 
+        }
+        
+        //Sleep(10000);
+    } //end for
+    
+    ggtrans_cleanup_client();
+    
+    ModifyMenu(menu, IDM_AUTOTRANSLATE, MF_BYCOMMAND | MF_STRING, IDM_AUTOTRANSLATE, MENU_AUTOTRANSLATE);
+    EnableMenuItem(menu, IDM_SINGLETRANSLATE, MF_ENABLED);   
+        
+    ggTransThreadRunning = false;
+
+    //MessageBox (hwndMain, "End.", INTERFACE_PROPERTIESTITLE, /*MB_ICONINFORMATION*/ MB_USERICON | MB_OK); //
+    return 0;
+}
+    
+ 
+//added in 1.4
+void SingleTranslate()
+{
+    
+    long i = msgObj->currentString();
+
+    //check if string is not a clone string...
+    if (msgObj->isClone(i))
+    {
+         //message error
+        MessageBox (hwndMain, ERR_CANTGGTRANSLATE, ERR_TITLE, MB_ICONINFORMATION | MB_OK); //
+        
+        return;
+    }
+    
+    //check if string is not being translated
+    //if (msgObj->getTranslation(i) != 0) 
+    char textdata[10240];
+    GetWindowText(hwndEdit, textdata, 10240);
+    if (textdata[0] != 0)
+    {
+          //replacement confirmation messagebox
+          int btn = MessageBox (hwndMain, WARNING_GGTRANSEXISTS, WARN_ATTENTION, 
+                                        MB_APPLMODAL | MB_ICONQUESTION | MB_OKCANCEL);
+          if (btn == IDCANCEL)
+          {
+            return;    
+          }
+    }  
+    
+  
+    ggtrans_init_client();
+    
+    char *trans_text = ggtrans_translate_multiline_text((char *)msgObj->getPhrase(i), ggt_languages[ggt_source_language], ggt_languages[ggt_dest_language]);  //"en", "it");
+                  
+     int nBufferSize = strlen(trans_text)*2 +10;
+     WCHAR *tBuffer = (WCHAR *) malloc(nBufferSize);
+       
+              
+     MultiByteToWideChar(
+      CP_UTF8,
+      0,         
+      trans_text, 
+      -1,       
+      tBuffer,  
+      nBufferSize        
+    );  
+       
+     WideCharToMultiByte(
+      CP_ACP, 
+      0, 
+      tBuffer,
+      -1, 
+      trans_text, 
+      strlen(trans_text)+1,
+      "?UNK?",    
+      0
+    );
+    
+    free (tBuffer);
+     
+    
+   //as this is the selected item, let's first update the Edit field
+    msgObj->setTranslation(i, trans_text);
+    SetWindowText(hwndEdit, trans_text);
+
+    //now let's replace the list item
+    LV_ITEM lvi;
+    lvi.pszText = trans_text;
+    lvi.cchTextMax = 10240;                   
+    lvi.mask = LVIF_TEXT;
+    lvi.iItem = i;
+    lvi.iSubItem = 7;
+    ListView_SetItem(hwndListV, &lvi);
+
+    msgObj->setTranslation(i, trans_text);
+           
+    datasaved = false;
+    EnableMenuItem(menu, IDM_FILESAVE, MF_ENABLED);
+
+    free(trans_text);
+    
+    ggtrans_cleanup_client();
+    
+}
+
+
+                         
 
 bool ImportAudMapStub(HWND hwnd)
 {
@@ -117,7 +459,7 @@ bool ImportAudMapStub(HWND hwnd)
           switch (btn)
           {
             case IDOK:
-              msgObj->setAudMapName("");
+              msgObj->setAudMapName((char*)"");
               break;
             case IDCANCEL:      
              default:
@@ -494,7 +836,6 @@ LRESULT CALLBACK CloneDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                   return LOWORD(wParam);
                } 
           }     
-          break;
          case IDCANCEL:
          case IDNO:
                EndDialog(hDlg, -1);
@@ -634,7 +975,6 @@ void DoCloning(HWND hwnd)
                msgObj->setPhrase(msgObj->currentString(), (char *) msgObj->getPhrase(actualclone));
              }
                     
-             //TODO remove this message?
              //TODO add control that external map == internal?
              MessageBox(hwnd, CLONES_UNCLONINGSUCCEDED, INTERFACE_UNCLONINGTITLE, MB_OK | MB_ICONINFORMATION);                                                                                                                                                                            
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
@@ -660,8 +1000,8 @@ void DoCloning(HWND hwnd)
                msgObj->setCloneVerb(msgObj->currentString(), msgObj->getVerb(msgObj->findListIndex(usvalue-1))); 
                msgObj->setCloneCase(msgObj->currentString(), msgObj->getCase(msgObj->findListIndex(usvalue-1))); 
  
-               msgObj->setPhrase(msgObj->currentString(), "");
-               msgObj->setTranslation(msgObj->currentString(), "");
+               msgObj->setPhrase(msgObj->currentString(), (LPSTR)"");
+               msgObj->setTranslation(msgObj->currentString(), (LPSTR)"");
                
                //for now, we only remove MAP entries to stuff uncloned by Sciamano (which is offset=0 however, so it is perfectly reversible)
                if (msgObj->getAudMap())
@@ -1063,7 +1403,11 @@ BOOL DoFileOpen(HWND hwnd, char *filename, bool searching)
       EnableMenuItem(menu, IDM_LOADAUDRES, ((result && nonzerofile && !sciold) ? MF_ENABLED : MF_GRAYED));    
       EnableMenuItem(menu, IDM_PLAY, ((result && nonzerofile && !sciold) ? MF_ENABLED : MF_GRAYED));    
       EnableMenuItem(menu, IDM_AUTOPLAY, ((result && nonzerofile && !sciold) ? MF_ENABLED : MF_GRAYED));    
-
+      
+      EnableMenuItem(menu, 6, ((result && nonzerofile && !sciold) ? MF_ENABLED : MF_GRAYED) | MF_BYPOSITION);    
+  
+      DrawMenuBar(hwnd);
+	
       for (int i =14; i<=26; i++)
           EnableMenuItem(menu, IDM_FONT+i, ((result && nonzerofile) ? MF_ENABLED : MF_GRAYED));
      
@@ -1753,7 +2097,7 @@ void updateStrIndex(HWND hwnd, unsigned short value)
 }
 
 
-typedef BOOL (*Func)(HWND, char *, unsigned char, char *, char *);
+typedef BOOL(*Func)(HWND, char*, unsigned char, char*, char*);
  
 /* this is what is going to be holding our function, I like to make it the same name as the function we are importing, but you can make it whatever you like. */
 Func ExtractFromVolume;
@@ -1764,7 +2108,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     HWND hwnd;               /* This is the handle for our window */
     MSG messages;            /* Here messages to the application are saved */
     WNDCLASSEX wincl;        /* Data structure for the windowclass */
-    
+        
     InitCommonControls();
     
     HINSTANCE DLL = LoadLibrary("SCIdump.dll");
@@ -1778,6 +2122,15 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     {
        FreeLibrary((HMODULE)DLL);
        MessageBox(NULL, ERR_CANTLOADDLL, ERR_TITLE, MB_OK | MB_ICONERROR);
+    }
+
+    // Initialize the critical section one time only.
+    if (!InitializeCriticalSectionAndSpinCount(&ggTransThreadCriticalSection, 
+        0x00000400) ) 
+    {
+       MessageBox(NULL, "Unable to instantiate Critical Section", ERR_TITLE, MB_OK | MB_ICONERROR);
+         
+       return 0;
     }
 
     /* The Window structure */
@@ -1804,7 +2157,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     hwnd = CreateWindowEx(
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
-           "TransSCI",          /* Title Text */
+           "SCIaMano TraduSCI",          /* Title Text */
             WS_OVERLAPPEDWINDOW ,   /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
@@ -1857,7 +2210,6 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
             -5, 0, hwindRect.right+10, 26, hwnd, NULL, hThisInstance, NULL);
     
 
-
     WNDCLASSEX wintextcl;        /* Data structure for the windowclass */
         
     /* The Window structure */
@@ -1886,11 +2238,15 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
             WS_CHILD | WS_VISIBLE, //SS_ETCHEDHORZ
             //10, 50, 520, 30, hwnd, NULL, GetModuleHandle(NULL), NULL); 
             0, 26, hwindRect.right, hwindRect.bottom-50, hwnd, NULL, hThisInstance, NULL);
-       
+    /*   
+        MoveWindow(hwndFrame, 0, 26, LOWORD(lParam), HIWORD(lParam)-50, false);               
+                MoveWindow(hwndBarFrame, -5, 0, LOWORD(lParam)+10, 26, false); 
+                MoveWindow(hwndStatusBar, 0, HIWORD(lParam)-24,LOWORD(lParam),24,false);
+  */
 
     hwndStatusBar = CreateWindowEx(0, "msctls_statusbar32", "",
                   WS_CHILD | WS_VISIBLE,
-                  0,hwindRect.right,hwindRect.bottom-24,24, hwnd, NULL,GetModuleHandle(NULL), NULL); 
+                  0,hwindRect.right-24,hwindRect.bottom/*-24*/,24, hwnd, NULL,GetModuleHandle(NULL), NULL); 
      
     //let's subclass the statusbar     
     g_pfnWndProcOrig = (WNDPROC) SetWindowLong(hwndStatusBar, GWL_WNDPROC, (LONG) WinStatusBarProcedure); 
@@ -1909,6 +2265,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
 
 
     LV_COLUMN lvc; 
+   // int iCol; 
 
     // Initialize the LVCOLUMN structure.
     // The mask specifies that the format, width, text, and subitem members
@@ -1917,44 +2274,44 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
 	  
  
         lvc.iSubItem = 0;
-        lvc.pszText = (char*)"Dummy";	
+        lvc.pszText = (LPSTR)"Dummy";
         lvc.cx = 10;     // width of column in pixels
         ListView_InsertColumn(hwndListV, 0, &lvc); 
         
         lvc.cx = 55;
         lvc.fmt = LVCFMT_RIGHT;
-        lvc.pszText = (char*)INTERFACE_INDEX;
+        lvc.pszText = (LPSTR)INTERFACE_INDEX;
         ListView_InsertColumn(hwndListV, 1, &lvc); 
         
         lvc.cx = 70;
-        lvc.pszText = (char*)INTERFACE_NOUN;
+        lvc.pszText = (LPSTR)INTERFACE_NOUN;
         ListView_InsertColumn(hwndListV, 2, &lvc); 
 
-        lvc.pszText = (char*)INTERFACE_VERB;
+        lvc.pszText = (LPSTR)INTERFACE_VERB;
         ListView_InsertColumn(hwndListV, 3, &lvc); 
 
-        lvc.pszText = (char*)INTERFACE_CASE;
+        lvc.pszText = (LPSTR)INTERFACE_CASE;
         ListView_InsertColumn(hwndListV, 4, &lvc); 
         
         lvc.cx = 50;
-        lvc.pszText = (char*)INTERFACE_SEQUENCE;
+        lvc.pszText = (LPSTR)INTERFACE_SEQUENCE;
         ListView_InsertColumn(hwndListV, 5, &lvc); 
 
         lvc.cx = 70;
-        lvc.pszText = (char*)INTERFACE_TALKER;
+        lvc.pszText = (LPSTR)INTERFACE_TALKER;
         ListView_InsertColumn(hwndListV, 6, &lvc); 
 
 
         lvc.cx = 400;     // width of column in pixels
         lvc.fmt = LVCFMT_LEFT;  // left-aligned column
          
-        lvc.pszText = (char*)INTERFACE_MESSAGE;
+        lvc.pszText = (LPSTR)INTERFACE_MESSAGE;
         ListView_InsertColumn(hwndListV, 7, &lvc); 
         
-        lvc.pszText = (char*)INTERFACE_MTRANSLATION;
+        lvc.pszText = (LPSTR)INTERFACE_MTRANSLATION;
         ListView_InsertColumn(hwndListV, 8, &lvc); 
         
-        lvc.pszText = (char*)INTERFACE_COMMENT;
+        lvc.pszText = (LPSTR)INTERFACE_COMMENT;	
         ListView_InsertColumn(hwndListV, 9, &lvc); 
 
         ListView_DeleteColumn(hwndListV, 0);
@@ -2167,7 +2524,9 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     SetWindowFont(hwndPhraseButton, hfInterface, true);
     SetWindowFont(hwndEditButton, hfInterface, true);
     
-   
+    //DIRTY FIX to better arrange GUI items position
+    GetWindowRect(hwnd, &hwindRect);
+    MoveWindow(hwnd, hwindRect.left, hwindRect.top, WIN_WIDTH+2, WIN_HEIGHT, true);
           
     hInst= hThisInstance;
     accelTable = LoadAccelerators(hThisInstance, TEXT("theAccel"));
@@ -2207,6 +2566,9 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
               DispatchMessage(&messages);
            }
     }
+    
+    // Release resources used by the critical section object.
+    DeleteCriticalSection(&ggTransThreadCriticalSection);
     
     DeleteObject(hfDefault);
     FreeLibrary((HMODULE)DLL);
@@ -2378,19 +2740,15 @@ LRESULT CALLBACK WindowTextProcedure(HWND hWnd, UINT message, WPARAM wParam, LPA
                   case LVN_KEYDOWN:
                   //case LVN_ITEMACTIVATE:
                    {    
-
-                      if (msgObj) {
-                          LV_ITEM lvi;
-                          lvi.mask = LVIF_PARAM;
-                          lvi.iItem = ListView_GetNextItem(hwndListV, -1, LVNI_SELECTED);
-                          lvi.iSubItem = 0;
-                          ListView_GetItem(hwndListV, &lvi);
-
-                          updateStrIndex(hWnd, msgObj->findListIndex(lvi.lParam));
-
-                          InvalidateRect(hwndListV, NULL, false);
-                      }
-                   
+                    LV_ITEM lvi;
+                    lvi.mask = LVIF_PARAM;
+                    lvi.iItem = ListView_GetNextItem(hwndListV, -1, LVNI_SELECTED);
+                    lvi.iSubItem = 0;
+                    ListView_GetItem(hwndListV, &lvi);
+                    
+                    updateStrIndex(hWnd, msgObj->findListIndex(lvi.lParam));
+                    
+                    InvalidateRect(hwndListV, NULL,  false);
                    }
                    break;
                   case LVN_COLUMNCLICK:
@@ -2736,7 +3094,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                  case IDM_FILEOPENVOL:
                  {
                     char exFile[MAX_PATH]="";
-                    if (ExtractFromVolume(hwnd, NULL, 0x8F, (char*)"msg", exFile))
+                    if (ExtractFromVolume(hwnd, NULL, 0x8F, (LPSTR)"msg", exFile))
                        DoFileOpen(hwnd, exFile, false);         
                     break;
                  }
@@ -3056,7 +3414,7 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                  case IDM_LOADLABELSTXT:
                       updateStrIndex(hwnd, msgObj->currentString());  //to write in memory current editings
 
-                      if (ImportLabels(hwnd, "labels.txt"))
+                      if (ImportLabels(hwnd, (LPSTR)"labels.txt"))
                       {
                          SetWindowText(hwndNoun, msgObj->getNounName(msgObj->getNoun(msgObj->currentString())));
                          SetWindowText(hwndVerb, msgObj->getVerbName(msgObj->getVerb(msgObj->currentString())));
@@ -3072,26 +3430,113 @@ LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                  case IDM_EXPORTNOUNS:
                       updateStrIndex(hwnd, msgObj->currentString());  //to write in memory current editings
 
-                      ExportLabels(hwnd, 1, "nouns.txt");
+                      ExportLabels(hwnd, 1, (char*)"nouns.txt");
                       break;
                  case IDM_EXPORTVERBS:
                       updateStrIndex(hwnd, msgObj->currentString());  //to write in memory current editings
 
-                      ExportLabels(hwnd, 2, "verbs.txt");
+                      ExportLabels(hwnd, 2, (char*)"verbs.txt");
                       break;   
                  case IDM_EXPORTCASES:
                       updateStrIndex(hwnd, msgObj->currentString());  //to write in memory current editings
 
-                      ExportLabels(hwnd, 3, "cases.txt");
+                      ExportLabels(hwnd, 3, (char*)"cases.txt");
                       break;
                  case IDM_EXPORTTALKERS:
                       updateStrIndex(hwnd, msgObj->currentString());  //to write in memory current editings
 
-                      ExportLabels(hwnd, 4, "talkers.txt");
+                      ExportLabels(hwnd, 4, (char*)"talkers.txt");
                       break;  
                  case IDM_CLONE:
                       DoCloning(hwndMain);
                       break;              
+   //added in 1.4
+                case IDM_AUTOTRANSLATE:
+                        if (!ggTransThreadRunning)
+                        {
+                            //handle might remain active if the thread ended without the user stopping it first
+                            if (hTransThread != NULL)
+                            {
+                                CloseHandle(hTransThread);
+                                                        
+                                // Request ownership of the critical section.
+                                EnterCriticalSection(&ggTransThreadCriticalSection); 
+                                ggTransThreadHalt = false;
+                                // Release ownership of the critical section.
+                                LeaveCriticalSection(&ggTransThreadCriticalSection);
+                                        
+                            }
+                        
+                            //start translation thread
+                            hTransThread = CreateThread(
+                                    NULL,   //default security attributes
+                                    0,      //efault stack size
+                                    AutoTransThread,    //thread function
+                                    NULL,   //argument to thread function
+                                    0,      //use default creation thread
+                                    &dwTransThreadId);   //returns the thread identifier
+                         
+                            if (dwTransThreadId == NULL)
+                            {   
+                                MessageBox (hwnd, "Error creating thread!", ERR_TITLE, MB_ICONINFORMATION | MB_OK); //
+                            } 
+                            else
+                            {
+                                //nothing to be done if ok  
+                                ModifyMenu(menu, IDM_AUTOTRANSLATE, MF_BYCOMMAND | MF_STRING, IDM_AUTOTRANSLATE, MENU_STOPTRANSLATE);
+                                EnableMenuItem(menu, IDM_SINGLETRANSLATE, MF_DISABLED);
+
+                            }
+                        }
+                        else
+                        {
+                            //send halt signal
+                            // Request ownership of the critical section.
+                            EnterCriticalSection(&ggTransThreadCriticalSection); 
+                            ggTransThreadHalt = true;
+                            // Release ownership of the critical section.
+                            LeaveCriticalSection(&ggTransThreadCriticalSection);
+                                           
+                        }
+                        
+                    break;
+   //added in 1.4
+
+                case IDM_SINGLETRANSLATE:
+
+                    SingleTranslate();
+                    
+                    break;
+   //added in 1.4
+                                        
+                default: //remaining cases
+                    
+                        if (LOWORD(wParam) >= IDM_GTTRANSLANG)
+                        {
+                            CheckMenuItem(menu, IDM_GTTRANSLANG+ggt_dest_language, MF_UNCHECKED);
+    
+                            ggt_dest_language = LOWORD(wParam) - IDM_GTTRANSLANG;    
+                            
+                            CheckMenuItem(menu, IDM_GTTRANSLANG+ggt_dest_language, MF_CHECKED);
+    
+                        }
+                        else if (LOWORD(wParam) >= IDM_GTLANGUAGE)
+                        {
+                            CheckMenuItem(menu, IDM_GTLANGUAGE+ggt_source_language, MF_UNCHECKED);
+                            
+                            ggt_source_language = LOWORD(wParam) - IDM_GTLANGUAGE;
+                            
+                            CheckMenuItem(menu, IDM_GTLANGUAGE+ggt_source_language, MF_CHECKED);
+    
+                        }
+                        else
+                        {
+                            //error
+                            MessageBox (hwnd, "Unhandled menu item!", ERR_TITLE, MB_ICONINFORMATION | MB_OK); //
+                                     
+                        }
+              
+                    break;
                 }
                 
            break;

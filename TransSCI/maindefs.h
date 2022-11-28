@@ -1,5 +1,5 @@
 /*	TraduSCI - Sierra SCI1.1/SCI32 games translator
- *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2008.
+ *  Copyright (C) Enrico Rolfi 'Endroz', 2003-2021.
  *
  *	This code header is used to define Win controls constants
  *	
@@ -10,8 +10,8 @@
 
 
 
-#define WIN_WIDTH 780
-#define WIN_HEIGHT 570
+#define WIN_WIDTH 1024
+#define WIN_HEIGHT 600
 
  
  /* main window buttons */
@@ -120,6 +120,11 @@
 #define IDM_PLAY            720
 #define IDM_LOADAUDRES      722
 #define IDM_AUTOPLAY        721
+
+#define IDM_AUTOTRANSLATE   801
+#define IDM_SINGLETRANSLATE 802
+#define IDM_GTLANGUAGE      8000
+#define IDM_GTTRANSLANG     8500
 
 #define IDM_HELP            900
 

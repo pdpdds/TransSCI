@@ -78,11 +78,13 @@
       <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>4996;4244;4700;4018;4091;4477;</DisableSpecificWarnings>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;comctl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.a;winmm.lib;comctl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,7 +139,6 @@
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="english.h" />
-    <ClInclude Include="italian.h" />
     <ClInclude Include="language.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="main.h" />
@@ -146,10 +147,10 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="SCIaMano(ENG)_private.h" />
     <ClInclude Include="SCIaMano_private.h" />
-    <ClInclude Include="spanish.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ggtrans-api-client.cpp" />
     <ClCompile Include="graphs.cpp" />
     <ClCompile Include="labels.cpp" />
     <ClCompile Include="main.cpp" />

@@ -19,14 +19,13 @@
 #include "utils.h"
 #include "language.h"
 #include "message.h"
+//#include "maps.hpp"
 
 #ifdef _MSC_VER 
  //not #if defined(_WIN32) || defined(_WIN64) because we have strncasecmp in mingw
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #endif
-
-//#include "maps.hpp"
 
  /* That's the object which stores all MSG data in main.h */
  

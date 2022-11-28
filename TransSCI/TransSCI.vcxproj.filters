@@ -20,44 +20,38 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="common.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="english.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="italian.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="language.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="list.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="maindefs.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="message.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SCIaMano(ENG)_private.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="utils.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SCIaMano_private.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="spanish.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="SCIaMano(ENG)_private.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="message.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="maps.hpp">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="maindefs.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="list.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="language.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="english.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +83,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="wordlookup.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ggtrans-api-client.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

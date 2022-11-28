@@ -1,55 +1,73 @@
-# Project: SCIaMano(eng)
-# Makefile created by Dev-C++ 5.11
+# Project: SCIaMano
+# Compiler: Default GCC compiler
+# Compiler Type: MingW 3
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 09/10/21 10:30
 
-CPP      = g++.exe -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
-WINDRES  = windres.exe
-OBJ      = main.o utils.o message.o maps.o graphs.o msgfile.o msg2txt.o wordlookup.o SCRParse.o labels.o
-LINKOBJ  = main.o utils.o message.o maps.o graphs.o msgfile.o msg2txt.o wordlookup.o SCRParse.o labels.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib32" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -static-libgcc -mwindows -lwinmm -lcomctl32 -m32 -g3
-INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"./"
-CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"./"
-BIN      = SCIaMano(ENG).exe
-CXXFLAGS = $(CXXINCS) -m32 -g3 -fpermissive
-CFLAGS   = $(INCS) -m32 -g3 -DENGLISH
-RM       = rm.exe -f
+WXLIBNAME = wxmsw29u
+CPP       = g++.exe
+CC        = gcc.exe
+WINDRES   = "windres.exe"
+OBJ       = Output\ (ENG)/main.o Output\ (ENG)/maps.o Output\ (ENG)/labels.o Output\ (ENG)/SCRParse.o Output\ (ENG)/wordlookup.o Output\ (ENG)/msg2txt.o Output\ (ENG)/msgfile.o Output\ (ENG)/graphs.o Output\ (ENG)/message.o Output\ (ENG)/utils.o Output\ (ENG)/ggtrans-api-client.o Output\ (ENG)/SCIaMano(ENG)_private.res
+LINKOBJ   = "Output (ENG)/main.o" "Output (ENG)/maps.o" "Output (ENG)/labels.o" "Output (ENG)/SCRParse.o" "Output (ENG)/wordlookup.o" "Output (ENG)/msg2txt.o" "Output (ENG)/msgfile.o" "Output (ENG)/graphs.o" "Output (ENG)/message.o" "Output (ENG)/utils.o" "Output (ENG)/ggtrans-api-client.o" "Output (ENG)/SCIaMano(ENG)_private.res"
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -mwindows -lwinmm -lcomctl32 libcurl.dll.a  -g3 
+INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"."
+CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common" -I"."
+RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
+BIN       = Output (ENG)/SCIaMano.exe
+DEFINES   = 
+CXXFLAGS  = $(CXXINCS) $(DEFINES) -DENGLISH -g   -g3
+CFLAGS    = $(INCS) $(DEFINES) -DENGLISH   -g3
+GPROF     = gprof.exe
+ifeq ($(OS),Windows_NT)
+   RM = del /Q
+   FixPath = $(subst /,\,$1)
+else
+   RM = rm -f
+   FixPath = $1
+endif
+LINK      = g++.exe
 
 .PHONY: all all-before all-after clean clean-custom
-
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN)
+	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
 
 $(BIN): $(OBJ)
-	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
 
-main.o: main.cpp
-	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+Output\ (ENG)/main.o: $(GLOBALDEPS) main.cpp
+	$(CPP) -c main.cpp -o "Output (ENG)/main.o" $(CXXFLAGS)
 
-utils.o: utils.cpp
-	$(CPP) -c utils.cpp -o utils.o $(CXXFLAGS)
+Output\ (ENG)/maps.o: $(GLOBALDEPS) maps.cpp
+	$(CPP) -c maps.cpp -o "Output (ENG)/maps.o" $(CXXFLAGS)
 
-message.o: message.cpp
-	$(CPP) -c message.cpp -o message.o $(CXXFLAGS)
+Output\ (ENG)/labels.o: $(GLOBALDEPS) labels.cpp
+	$(CPP) -c labels.cpp -o "Output (ENG)/labels.o" $(CXXFLAGS)
 
-maps.o: maps.cpp
-	$(CPP) -c maps.cpp -o maps.o $(CXXFLAGS)
+Output\ (ENG)/SCRParse.o: $(GLOBALDEPS) SCRParse.cpp
+	$(CPP) -c SCRParse.cpp -o "Output (ENG)/SCRParse.o" $(CXXFLAGS)
 
-graphs.o: graphs.cpp
-	$(CPP) -c graphs.cpp -o graphs.o $(CXXFLAGS)
+Output\ (ENG)/wordlookup.o: $(GLOBALDEPS) wordlookup.cpp
+	$(CPP) -c wordlookup.cpp -o "Output (ENG)/wordlookup.o" $(CXXFLAGS)
 
-msgfile.o: msgfile.cpp
-	$(CPP) -c msgfile.cpp -o msgfile.o $(CXXFLAGS)
+Output\ (ENG)/msg2txt.o: $(GLOBALDEPS) msg2txt.cpp
+	$(CPP) -c msg2txt.cpp -o "Output (ENG)/msg2txt.o" $(CXXFLAGS)
 
-msg2txt.o: msg2txt.cpp
-	$(CPP) -c msg2txt.cpp -o msg2txt.o $(CXXFLAGS)
+Output\ (ENG)/msgfile.o: $(GLOBALDEPS) msgfile.cpp
+	$(CPP) -c msgfile.cpp -o "Output (ENG)/msgfile.o" $(CXXFLAGS)
 
-wordlookup.o: wordlookup.cpp
-	$(CPP) -c wordlookup.cpp -o wordlookup.o $(CXXFLAGS)
+Output\ (ENG)/graphs.o: $(GLOBALDEPS) graphs.cpp
+	$(CPP) -c graphs.cpp -o "Output (ENG)/graphs.o" $(CXXFLAGS)
 
-SCRParse.o: SCRParse.cpp
-	$(CPP) -c SCRParse.cpp -o SCRParse.o $(CXXFLAGS)
+Output\ (ENG)/message.o: $(GLOBALDEPS) message.cpp
+	$(CPP) -c message.cpp -o "Output (ENG)/message.o" $(CXXFLAGS)
 
-labels.o: labels.cpp
-	$(CPP) -c labels.cpp -o labels.o $(CXXFLAGS)
+Output\ (ENG)/utils.o: $(GLOBALDEPS) utils.cpp
+	$(CPP) -c utils.cpp -o "Output (ENG)/utils.o" $(CXXFLAGS)
+
+Output\ (ENG)/ggtrans-api-client.o: $(GLOBALDEPS) ggtrans-api-client.c
+	$(CPP) -c ggtrans-api-client.c -o "Output (ENG)/ggtrans-api-client.o" $(CXXFLAGS)
+
+Output\ (ENG)/SCIaMano(ENG)_private.res: Output\ (ENG)/SCIaMano(ENG)_private.rc eng.rc 
+	$(WINDRES) --input-format=rc -o "Output (ENG)/SCIaMano(ENG)_private.res" $(RCINCS) OUTPUT~1/SCIAMA~1.RC -O coff

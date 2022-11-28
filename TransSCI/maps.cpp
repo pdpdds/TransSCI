@@ -9,6 +9,7 @@
 #include "common.h"
 
 
+
 //extern BOOL ExtractFromVolume(HWND hwnd, char *mapname, unsigned char type, char *exten, char *filename);
  
 #define PATCH10    0x0010

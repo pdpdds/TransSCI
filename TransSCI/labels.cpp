@@ -7,6 +7,7 @@
 
 #include "common.h"
 
+
 void setNounLabel(HWND hwnd, unsigned char which, char *what)
 {
           char *previous = 0;
@@ -88,7 +89,7 @@ void setTalkerLabel(HWND hwnd, unsigned char which, char *what)
 }
 
 
-bool ImportLabels(HWND hwnd, const char *importfile)
+bool ImportLabels(HWND hwnd, char *importfile)
 {
   bool changes = false;
   
@@ -397,7 +398,7 @@ void appendLabelInTXT(HWND hwnd, char *filename, char type, unsigned char which,
                  
 }
 
-void ExportLabels(HWND hwnd, char type, const char *exportfile)       
+void ExportLabels(HWND hwnd, char type, char *exportfile)       
 {   //type: 1 nouns 2 verbs 3 cases 4 talkers [0 all (TODO?)]
    OPENFILENAME ofn;
    char szTextFileName[MAX_PATH] = "";

@@ -57,7 +57,7 @@
 #define EXPORT_INFO "\n\n--Attention: The first part of this file lists the sentences translated for using with the Orthographic check. If carriage return are added in that section, these will be inserted in the sentences. Also, do not modify the numbers that identify the sentences. \nData starting from this point are not sensitive and can be removed if not necessary.--\n\n\n"  
 #define EXPORT_ITEM "Sentence %u:\n%s\n\n"  
 #define EXPORT_ENDSECTION "\n\n---- End of the section ----\n"  
-#define EXPORT_COPYRIGHT "This file has been produced by SCIaMano 1.3.1 by Enrico Rolfi.\n\n\n"  
+#define EXPORT_COPYRIGHT "This file has been produced by SCIaMano 1.4.0 by Enrico Rolfi.\n\n\n"  
 #define EXPORT_FILEPATH "Path: %s\n"  
 #define EXPORT_FORMAT "Format: %s\n"  
 #define EXPORT_VERSION "Version: %s\n"  
@@ -101,6 +101,9 @@
 #define ERR_CANTALLOCSTRING "A problem of memory has occurred. The translated sentence has not been saved."  
 #define ERR_CANTLOADHEAPFILE "Error in the loading of the Heap file!"  
 #define ERR_CANTLOADDLL "Couldn't load SCIdump.dll! This program will crash if you will try to load a Volume file."
+
+#define ERR_CANTGGTRANSLATE "Cannot translate a cloned sentence. Please translate the original sentence or unclone it first."
+
 #define WARN_ATTENTION "Attention!"  
 #define WARN_SIERRAFORMAT "The file is in Sierra format, so you can save only the translated sentences in the place of the original ones. Also it doesn't support the special data of TraduSCI (like MAP and labels). \nWould you like to convert it in TraduSCI format so to preserve both versions of the sentences (and the special data)?"  
 #define WARN_OLDFORMAT "This file is in an old TraduSCI format, saving the changes will automatically converted it in TraduSCI2 format and you won't be able to used it in older versions of the program. Continue anyway? "  
@@ -188,19 +191,26 @@
   
 #define MENU_NEXTCOMMENT "Go to the next Note\tCtrl+D"  
   
-#define MENU_HELP "TraduSCI Manual... "   
+#define MENU_TRANSLATION "Translation"
+#define MENU_AUTOTRANSLATE "Start automatic translation"
+#define MENU_STOPTRANSLATE "Stop automatic translation"
+#define MENU_SINGLETRANSLATE "Translate current sentence"
+#define MENU_SOURCELANGUAGE "Original Language"
+#define MENU_TRANSLANGUAGE "Translation Language"   
+
+#define MENU_HELP "TraduSCI Manual... "
   
-#define WIN_FILEDESCRIPTION "Program to translate SCI1.1/SCI32 games.\0"  
-#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2014.\0"  
+#define WIN_FILEDESCRIPTION "A program to translate SCI1.1/SCI32 games.\0"  
+#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2021.\0"  
 #define WIN_LEGALTRADEMARKS "SCI (Sierra Creative Interpreter) is a trademark of Sierra On-line that holds copyrights on it. \0"  
-#define WIN_FILEVERSION "1.3.1\0"  
-#define WIN_PRODUCTVERSION "2.1\0"  
-#define WIN_FILEVERSIONID 1,3,1,0  
+#define WIN_FILEVERSION "1.4.0\0"  
+#define WIN_PRODUCTVERSION "2.4\0"  
+#define WIN_FILEVERSIONID 1,4,0,0  
 #define INTERFACE_ABOUTBOX "This program is open source (GNU GPL license), and can be freely distributed and modified provided that it stays open source. The author declines from every responsibility on possible damages caused by its use.  SCI is a trademark of Sierra On-line."  
-#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2014\n\nUpdates on http://erolfi.wordpress.com\nFor problems, suggestions and other write to: \n erolfi@gmail.com\n\n"  
-#define INTERFACE_VERSION "Version 1.3.1"  
+#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2021\n\nIn memory of Michele Del Bene (Micartu)\n\nUpdates on http://erolfi.wordpress.com\n\nFor problems, suggestions and other write to:\nerolfi on gmail.com\n\n"  
+#define INTERFACE_VERSION "Version 1.4.0"  
   
-#define MANUAL_PATH "Manual/instructions.html"  
+#define MANUAL_PATH "Manual\\instructions.html"  
           
   
 #define GRAPH_CLONEOF "\\fn\nClone of Noun%d, Verb %d, Case %d"  
@@ -273,3 +283,4 @@
   
 #define WARNING_FUTUREBOXDATA "This file has been saved with a more recent version of TraduSCI, and it contains some additional data that will be kept unchanged. It is however recommended not to modify this file using a version of SCIaMano older than 1.2, or the aforesaid data will be lost."  
   
+#define WARNING_GGTRANSEXISTS "This sentence already has a translation defined, do you want to overwrite it?"

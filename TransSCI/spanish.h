@@ -57,7 +57,7 @@
 #define EXPORT_INFO "\n\n--Atención: La primera parte de este archivo enumera las frases traducidas para usar el corrector Ortográfico. Si una pulsación del ENTER es añadida en esa sección, será insertado en las frases. Además, no modifiques los números que identifican las frases. \nLos datos que empiezan desde este punto no son detectables y pueden ser eliminados si no son necesarios.--\n\n\n"  
 #define EXPORT_ITEM "Frase %u:\n%s\n\n"  
 #define EXPORT_ENDSECTION "\n\n---- Fin de la sección ----\n"  
-#define EXPORT_COPYRIGHT "Este archivo ha sido producido por SCIaMano 1.3.1 de Enrico Rolfi.\n\n\n"  
+#define EXPORT_COPYRIGHT "Este archivo ha sido producido por SCIaMano 1.4.0 de Enrico Rolfi.\n\n\n"  
 #define EXPORT_FILEPATH "Ruta: %s\n"  
 #define EXPORT_FORMAT "Formato: %s\n"  
 #define EXPORT_VERSION "Versión: %s\n"  
@@ -101,6 +101,9 @@
 #define ERR_CANTALLOCSTRING "Ha ocurrido un problema de memoria. La frase traducida no ha sido grabada."  
 #define ERR_CANTLOADHEAPFILE "¡Error al cargar el archivo de Script Dinámico (Heap)!"  
 #define ERR_CANTLOADDLL "¡No se puede cargar SCIdump.dll! Este programa fallará si intentas cargar un archivo de Volumen."
+
+#define ERR_CANTGGTRANSLATE "No puedo traducir una frase que sea clon de otra. Traduzca la frase original o elimine la clonación primero."
+
 #define WARN_ATTENTION "¡Atención!"  
 #define WARN_SIERRAFORMAT "El archivo está en el formato de Sierra, así que sólo puedes guardar las frases traducidas en el lugar de las originales. Además no habrá soporte para los datos especiales de TraduSCI (como el MAPeado (MAP) y las etiquetas) \n¿Quieres convertirlo en el formato de TraduSCI para mantener ambas versiones en las frases (y los datos especiales)?"  
 #define WARN_OLDFORMAT "Este archivo está en un formato antiguo de TraduSCI, y al grabar los cambios automáticamente lo convertirás en el formato TraduSCI2 y no serás capaz de usar el archivo en versiones anteriores del programa. ¿Continuar de todos modos? "  
@@ -188,19 +191,26 @@
   
 #define MENU_NEXTCOMMENT "Ir a la Nota siguiente\tCtrl+D"  
   
+#define MENU_TRANSLATION "Traducción"
+#define MENU_AUTOTRANSLATE "Iniciar traducción automática"
+#define MENU_STOPTRANSLATE "Detener traducción automática"
+#define MENU_SINGLETRANSLATE "Traducir la frase actual"
+#define MENU_SOURCELANGUAGE "Idioma original"
+#define MENU_TRANSLANGUAGE "Idioma de traducción"
+
 #define MENU_HELP "Manual de TraduSCI... "   
-  
+    
 #define WIN_FILEDESCRIPTION "Programa para traducir juegos SCI1.1/SCI32.\0"  
-#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2014. Traducción al Español de SkaZZ.\0"  
+#define WIN_LEGALCOPYRIGHT "\251 Enrico Rolfi (Endroz), 2003-2021. Traducción al Español de SkaZZ.\0"  
 #define WIN_LEGALTRADEMARKS "SCI (Sierra Creative Interpreter) es una marca registrada de Sierra On-Line que mantiene los derechos. \0"  
-#define WIN_FILEVERSION "1.3.1\0"  
-#define WIN_PRODUCTVERSION "2.1\0"  
-#define WIN_FILEVERSIONID 1,3,1,0  
+#define WIN_FILEVERSION "1.4.0\0"  
+#define WIN_PRODUCTVERSION "2.4\0"  
+#define WIN_FILEVERSIONID 1,4,0,0  
 #define INTERFACE_ABOUTBOX "Este programa es de código abierto (Licencia GNU GPL) y puede ser libremente distribuido y modificado siempre y cuando permanezca como código abierto. El autor rechaza cualquier responsabilidad de los posibles daños causados por su uso. SCI es una marca registrada de Sierra On-Line."  
-#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2014.\nTraducción al Español de SkaZZ.\n\nActualizaciones en http://erolfi.wordpress.com\nPara problemas, sugerencias y otros escribid a: \n erolfi@gmail.com\n\n"  
-#define INTERFACE_VERSION "Versión 1.3.1"  
+#define INTERFACE_ABOUTTITLE "\251 Enrico Rolfi (Endroz), 2003-2021. Traducción de SkaZZ.\n\nEn memoria de Michele Del Bene (Micartu)\n\nActualizaciones en http://erolfi.wordpress.com\n\nPara problemas, sugerencias y otros escribid a:\n erolfi en gmail.com\n\n"  
+#define INTERFACE_VERSION "Versión 1.4.0"  
   
-#define MANUAL_PATH "Manual/instrucciones.html"  
+#define MANUAL_PATH "Manual\\instrucciones.html"  
           
   
 #define GRAPH_CLONEOF "\\fn\nClon del Nombre%d, Verbo %d, Evento %d"  
@@ -273,3 +283,4 @@
   
 #define WARNING_FUTUREBOXDATA "Este archivo ha sido guardado con una versión más reciente de TraduSCI, y contiene algunos datos adicionales que se mantendrán sin cambios. Sin embargo, es recomendado no modificar este archivo usando una versión de SCIaMano más antigua que la 1.2, o los datos mencionados antes se perderán."  
   
+#define WARNING_GGTRANSEXISTS "Esta frase ya tiene traducción, ¿estás seguro de que quieres sobrescribirla?"

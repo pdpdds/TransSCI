@@ -1,0 +1,64 @@
+# Project: FotoSCIhop
+# Compiler: Default GCC compiler
+# Compiler Type: MingW 3
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 08/10/21 19:31
+
+WXLIBNAME = wxmsw29u
+CPP       = g++.exe
+CC        = gcc.exe
+WINDRES   = "windres.exe"
+OBJ       = Default\ Profile/FotoSCIhop.o Default\ Profile/list.o Default\ Profile/p56files.o Default\ Profile/palette.o Default\ Profile/scicell.o Default\ Profile/sciloop.o Default\ Profile/stdafx.o Default\ Profile/v56files.o Default\ Profile/FotoSCIhop_private.res
+LINKOBJ   = "Default Profile/FotoSCIhop.o" "Default Profile/list.o" "Default Profile/p56files.o" "Default Profile/palette.o" "Default Profile/scicell.o" "Default Profile/sciloop.o" "Default Profile/stdafx.o" "Default Profile/v56files.o" "Default Profile/FotoSCIhop_private.res"
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -mwindows  -g3 
+INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
+CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
+RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
+BIN       = Default Profile/FotoSCIhop.exe
+DEFINES   = 
+CXXFLAGS  = $(CXXINCS) $(DEFINES) -D__DEVC -DITALIAN -g   -g3
+CFLAGS    = $(INCS) $(DEFINES) -D__DEVC -DITALIAN -g   -g3
+GPROF     = gprof.exe
+ifeq ($(OS),Windows_NT)
+   RM = del /Q
+   FixPath = $(subst /,\,$1)
+else
+   RM = rm -f
+   FixPath = $1
+endif
+LINK      = g++.exe
+
+.PHONY: all all-before all-after clean clean-custom
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
+
+$(BIN): $(OBJ)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
+
+Default\ Profile/FotoSCIhop.o: $(GLOBALDEPS) FotoSCIhop.cpp stdafx.h FotoSCIhop.h resource.h language.h italian.h english.h spanish.h list.h palette.h scicell.h stdafx.h palette.h sciloop.h list.h scicell.h p56files.h list.h scicell.h palette.h language.h v56files.h list.h sciloop.h palette.h language.h
+	$(CPP) -c FotoSCIhop.cpp -o "Default Profile/FotoSCIhop.o" $(CXXFLAGS)
+
+Default\ Profile/list.o: $(GLOBALDEPS) list.cpp stdafx.h list.h
+	$(CPP) -c list.cpp -o "Default Profile/list.o" $(CXXFLAGS)
+
+Default\ Profile/p56files.o: $(GLOBALDEPS) p56files.cpp stdafx.h p56files.h list.h scicell.h stdafx.h palette.h palette.h language.h italian.h english.h spanish.h
+	$(CPP) -c p56files.cpp -o "Default Profile/p56files.o" $(CXXFLAGS)
+
+Default\ Profile/palette.o: $(GLOBALDEPS) palette.cpp stdafx.h palette.h
+	$(CPP) -c palette.cpp -o "Default Profile/palette.o" $(CXXFLAGS)
+
+Default\ Profile/scicell.o: $(GLOBALDEPS) scicell.cpp StdAfx.h scicell.h stdafx.h palette.h p56files.h list.h scicell.h palette.h language.h italian.h english.h spanish.h
+	$(CPP) -c scicell.cpp -o "Default Profile/scicell.o" $(CXXFLAGS)
+
+Default\ Profile/sciloop.o: $(GLOBALDEPS) sciloop.cpp StdAfx.h sciloop.h list.h scicell.h stdafx.h palette.h
+	$(CPP) -c sciloop.cpp -o "Default Profile/sciloop.o" $(CXXFLAGS)
+
+Default\ Profile/stdafx.o: $(GLOBALDEPS) stdafx.cpp stdafx.h
+	$(CPP) -c stdafx.cpp -o "Default Profile/stdafx.o" $(CXXFLAGS)
+
+Default\ Profile/v56files.o: $(GLOBALDEPS) v56files.cpp stdafx.h v56files.h list.h sciloop.h list.h scicell.h stdafx.h palette.h palette.h language.h italian.h english.h spanish.h
+	$(CPP) -c v56files.cpp -o "Default Profile/v56files.o" $(CXXFLAGS)
+
+Default\ Profile/FotoSCIhop_private.res: Default\ Profile/FotoSCIhop_private.rc ita.rc 
+	$(WINDRES) --input-format=rc -o "Default Profile/FotoSCIhop_private.res" $(RCINCS) DEFAUL~1/FOTOSC~1.RC -O coff

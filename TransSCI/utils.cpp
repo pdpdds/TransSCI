@@ -10,12 +10,10 @@
 
 
 #include "utils.h"
-#include "common.h"
-
+#include"common.h"
 
 char* my_fgets(char* caBuffer, int nBufferSize, FILE* fileRead)
 {
-
 	if (nBufferSize <= 0)
 		return 0;
 
@@ -60,23 +58,18 @@ char* my_fgets(char* caBuffer, int nBufferSize, FILE* fileRead)
 	delete tBuffer2;
 
 
-
 	return caBuffer;
 }
 
 int	my_fputs(const char* szOutput, FILE* fileWrite)
 {
 	int nBufferSize = strlen(szOutput) + 1;
-
-	if (nBufferSize <= 0)
-		return -1;
-
+	
 	//char tBuffer[nBufferSize];
 	//WCHAR tBuffer2[nBufferSize * 2];
 
 	char* tBuffer = new char[nBufferSize];
 	WCHAR* tBuffer2 = new WCHAR[nBufferSize];
-
 
 	//we replace AnsiToOem(szOutput, tBuffer);   with a safer technique
 
