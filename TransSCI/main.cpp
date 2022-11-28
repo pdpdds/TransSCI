@@ -1804,7 +1804,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance, HINSTANCE hPrevInstance, LPSTR lpszA
     hwnd = CreateWindowEx(
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
-           "SCIaMano TraduSCI",          /* Title Text */
+           "TransSCI",          /* Title Text */
             WS_OVERLAPPEDWINDOW ,   /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
