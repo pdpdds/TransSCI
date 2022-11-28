@@ -16,4 +16,4 @@ Enrico Rolfi님께서 제작하셨습니다.
 * 프로그램과 관련된 텍스트를 영어로 수정
 
 ## 제작자님 홈페이지
-[tradusci](https://erolfi.wordpress.com/tradusci/)
+[TransSCI](https://erolfi.wordpress.com/tradusci/)
