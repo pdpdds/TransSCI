@@ -233,7 +233,7 @@ BEGIN
 //                MENUITEM "Kazakh", IDM_GTLANGUAGE+46
 //                MENUITEM "Khmer", IDM_GTLANGUAGE+47
                 MENUITEM "Kinyarwanda", IDM_GTLANGUAGE+48
-//                MENUITEM "Korean", IDM_GTLANGUAGE+49
+                MENUITEM "Korean", IDM_GTLANGUAGE+49
                 MENUITEM "Kurdish", IDM_GTLANGUAGE+50
 //                MENUITEM "Kyrgyz", IDM_GTLANGUAGE+51
 //                MENUITEM "Lao", IDM_GTLANGUAGE+52
@@ -349,7 +349,7 @@ BEGIN
 //                MENUITEM "Kazakh", IDM_GTTRANSLANG+46
 //                MENUITEM "Khmer", IDM_GTTRANSLANG+47
                 MENUITEM "Kinyarwanda", IDM_GTTRANSLANG+48
-//                MENUITEM "Korean", IDM_GTTRANSLANG+49
+                MENUITEM "Korean", IDM_GTTRANSLANG+49
                 MENUITEM "Kurdish", IDM_GTTRANSLANG+50
 //                MENUITEM "Kyrgyz", IDM_GTTRANSLANG+51
 //                MENUITEM "Lao", IDM_GTTRANSLANG+52
