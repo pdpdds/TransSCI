@@ -6,4 +6,4 @@ tradusci visual studio port version
 Visual Studio 2022 or higher
 
 ## Reference
-[https://erolfi.wordpress.com/tradusci/](tradusci homepage)
+[tradusci homepage](https://erolfi.wordpress.com/tradusci/)
